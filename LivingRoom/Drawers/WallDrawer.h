@@ -1,0 +1,3 @@
+void drawBackWall();
+
+void drawFloor();

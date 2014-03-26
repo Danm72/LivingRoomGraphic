@@ -10,10 +10,14 @@ void createLampPole(GLUquadricObj *qobj);
 
 void createLampBase(GLUquadricObj *qobj);
 
-void createFlatSurface(GLUquadricObj *, GLuint);
-
-void createTableLeg(GLUquadricObj *, GLuint);
+void createTableInnerBeam(GLUquadricObj *, GLuint);
 
 void createLamp();
 
 void createLightingEnv();
+void createTableLeg(GLUquadricObj *obj, GLuint list);
+
+void createTableLayer(GLUquadricObj *obj, GLuint list);
+
+void createWall(GLUquadricObj *obj, GLuint list);
+

@@ -1,7 +1,7 @@
-#include "ObjectCreator.h"
-#include "Placement.h"
+#import "ObjectCreator.h"
+#import  "Placement.h"
 #import "LampDrawer.h"
-#include "TreeNode.h"
+#import "TreeNode.h"
 
 
 #import "TableDrawer.h"
@@ -9,6 +9,10 @@
 void drawTableLayer1();
 
 void drawTableLayer2();
+
+void drawTableInner1();
+
+void drawTableInner2();
 
 void drawTableLeg1();
 

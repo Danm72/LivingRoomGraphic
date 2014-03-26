@@ -7,22 +7,26 @@
 //
 
 #import "LivingRoomScene.h"
+#import <stdio.h>
+#import <stdlib.h>
+#import "Input.h"
+#import "WallDrawer.h"
 
 static GLfloat theta [] = {0.0, 0.0, 0.0};
 static GLint axis = 2;
 GLUquadricObj *quadObj;
+camera cam1;
+camera *cam = &cam1;
+
 float angle = 0.0;
-GLdouble eyeX = 0;
-//* cos(angle);
-GLdouble eyeY = 0;
-//* sin(angle);
-GLdouble eyeZ = 0.0;
-GLdouble centerX = 0;
-GLdouble centerY = 0;
-GLdouble centerZ = -1;
-GLdouble upX = 0;
-GLdouble upY = 1;
-GLdouble upZ = -1.5;
+// actual vector representing the camera's direction
+float lx = 0.0f, lz = -1.0f;
+// XZ position of the camera
+float x = 0.0f, z = 0.0f;
+
+GLfloat whiteSpecularLight[] = {1.0, 1.0, 1.0};
+GLfloat blackAmbientLight[] = {0.0, 0.0, 0.0};
+GLfloat whiteDiffuseLight[] = {1.0, 1.0, 1.0};
 
 treenode lamp_cone_node;
 treenode lamp_pole_node;
@@ -30,32 +34,39 @@ treenode lamp_base_node;
 
 treenode table_layer1_node;
 treenode table_layer2_node;
+treenode table_inner1_node;
+treenode table_inner2_node;
 treenode table_leg1_node;
 treenode table_leg2_node;
 treenode table_leg3_node;
 treenode table_leg4_node;
 
-treenode wall_node;
+treenode wall_back_node;
+treenode wall_floor_node;
+
+
+GLfloat xPos = 0.0;
+GLfloat zPos = 1.0;
+GLfloat yPos = 2.0;
+
 
 void setupLampNodes();
 
 void setupTableNodes();
 
+void drawHorizontalGrid();
+
+void drawVerticalGrid();
+
+void drawGrid();
+
+void setupWallNodes();
+
 void errorCallback(GLenum errorCode) {
     const GLubyte *estring;
-
     estring = gluErrorString(errorCode);
     fprintf(stderr, "Quadric Error: %s\n", estring);
     exit(0);
-}
-
-void mouse(int btn, int state, int x, int y) {
-    if (btn == GLUT_LEFT_BUTTON&& state == GLUT_DOWN)
-        axis = 0;
-    if (btn == GLUT_MIDDLE_BUTTON&& state == GLUT_DOWN)
-        axis = 1;
-    if (btn == GLUT_RIGHT_BUTTON&& state == GLUT_DOWN)
-        axis = 2;
 }
 
 //void (^translateBlock)(GLfloat []) = ^(GLfloat translateCoOrds []) {
@@ -64,133 +75,186 @@ void mouse(int btn, int state, int x, int y) {
 //};
 
 void init(void) {
+    initInputHandler(cam);
     createLightingEnv();
     glLoadIdentity();
-    glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
+
+    cam->eyeX = 0;
+    cam->eyeY = 1;
+    cam->eyeZ = -5;
+    cam->centerX = 0;
+    cam->centerY = 0;
+    cam->centerZ = 0;
+    cam->upX = 0;
+    cam->upY = 1;
+    cam->upZ = 0;
+    cam-> directionX = 0.0;
+    cam-> directionZ = -5.0;
+    cam-> directionY = 0.0;
+
+    startList = glGenLists(14);
+    quadObj = gluNewQuadric();
+
+    setupWallNodes();
 
     setupLampNodes();
 
     setupTableNodes();
 
-    startList = glGenLists(14);
-
-    quadObj = gluNewQuadric();
     gluQuadricCallback(quadObj, GLU_ERROR, (GLvoid ( *)()) errorCallback);
-
-    createFlatSurface(quadObj, startList + 9);
-    createFlatSurface(quadObj, startList + 10);
-    createFlatSurface(quadObj, startList + 11);
-    createFlatSurface(quadObj, startList + 12);
 }
 
+/*
+void setPosition(float angle, float posX, float posZ, float posY)
+{
+    xPos = posX;
+    zPos = posZ;
+    yPos = posY;
+
+    //compute instead of set based on angle
+    angleY = angle;
+    directionX = sin(angleY);
+    directionZ = -cos(angleY);
+}
+*/
+
 void setupTableNodes() {
+    glGetFloatv(GL_MODELVIEW, table_layer1_node.m);
     table_layer1_node.drawingFunction = drawTableLayer1;
     table_layer1_node.sibling = NULL;
     table_layer1_node.child = &table_layer2_node;
 
+    glGetFloatv(GL_MODELVIEW, table_layer2_node.m);
     table_layer2_node.drawingFunction = drawTableLayer2;
     table_layer2_node.sibling = NULL;
     table_layer2_node.child = &table_leg1_node;
 
+    glGetFloatv(GL_MODELVIEW, table_leg1_node.m);
     table_leg1_node.drawingFunction = drawTableLeg1;
     table_leg1_node.sibling = &table_leg2_node;
     table_leg1_node.child = NULL;
 
+    glGetFloatv(GL_MODELVIEW, table_leg2_node.m);
     table_leg2_node.drawingFunction = drawTableLeg2;
     table_leg2_node.sibling = &table_leg3_node;
     table_leg2_node.child = NULL;
 
+    glGetFloatv(GL_MODELVIEW, table_leg3_node.m);
     table_leg3_node.drawingFunction = drawTableLeg3;
     table_leg3_node.sibling = &table_leg4_node;
     table_leg3_node.child = NULL;
 
+    glGetFloatv(GL_MODELVIEW, table_leg4_node.m);
     table_leg4_node.drawingFunction = drawTableLeg4;
-    table_leg4_node.sibling = NULL;
+    table_leg4_node.sibling = &table_inner1_node;
     table_leg4_node.child = NULL;
+
+    glGetFloatv(GL_MODELVIEW, table_inner1_node.m);
+    table_inner1_node.drawingFunction = drawTableInner1;
+    table_inner1_node.sibling = &table_inner2_node;
+    table_inner1_node.child = NULL;
+
+    glGetFloatv(GL_MODELVIEW, table_inner2_node.m);
+    table_inner2_node.drawingFunction = drawTableInner2;
+    table_inner2_node.sibling = NULL;
+    table_inner2_node.child = NULL;
 }
 
 void setupLampNodes() {
+    glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
     lamp_cone_node.drawingFunction = drawCone;
-    lamp_cone_node.sibling = NULL;
+    lamp_cone_node.sibling = &table_layer1_node;
     lamp_cone_node.child = &lamp_pole_node;
 
+    glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW, lamp_pole_node.m);
     lamp_pole_node.drawingFunction = drawPole;
     lamp_pole_node.sibling = NULL;
     lamp_pole_node.child = &lamp_base_node;
 
+    glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW, lamp_base_node.m);
     lamp_base_node.drawingFunction = drawBase;
     lamp_base_node.sibling = NULL;
     lamp_base_node.child = NULL;
 }
 
+void setupWallNodes() {
+
+    glGetFloatv(GL_MODELVIEW, wall_floor_node.m);
+    wall_floor_node.drawingFunction = drawFloor;
+    wall_floor_node.sibling = &wall_back_node;
+    wall_floor_node.child = &lamp_cone_node;
+
+    glGetFloatv(GL_MODELVIEW, wall_back_node.m);
+    wall_back_node.drawingFunction = drawBackWall;
+    wall_back_node.sibling = NULL;
+    wall_back_node.child = NULL;
+
+}
+
+void light(void) {
+    glLightfv(GL_LIGHT0, GL_SPECULAR, whiteSpecularLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, blackAmbientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuseLight);
+}
+
 void createLightingEnv() {
-    GLfloat mat_ambient[] = {0.5, 0.5, 0.5, 1.0};
-    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_shininess[] = {50.0};
-    GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
-    GLfloat model_ambient[] = {0.5, 0.5, 0.5, 1.0};
 
-   // GLfloat lightpos [] = {0.0, 0.0, 0.0, 0.0};
-    GLfloat dx = 1.0;
-    GLfloat dy = 1.0;
-    GLfloat dz = 1.0;
-    GLfloat theta = 0.0;
-
-     //glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, model_ambient);
-
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
-    glEnable(GL_DEPTH_TEST);
-}
+    GLfloat lightpos[] = {0.0, 0.0, 0.0, 1.0};
 
+    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+
+}
 
 void display(void) {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //angle += 360. / 10.;
-    // set camera parameters
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(eyeX, eyeY, eyeZ,
-            centerX, centerY, centerZ,
-            upX, upY, upZ);
+/*    gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
+            cam->centerX, cam->centerY, cam->centerZ,
+            cam->upX, cam->upY, cam->upZ);*/
 
-    glRotatef(theta[0], 1.0, 0.0, 0.0);
-    glRotatef(theta[1], 0.0, 1.0, 0.0);
-    glRotatef(theta[2], 0.0, 0.0, 1.0);
+//    gluLookAt(x, 10.0f, z,
+//            x + lx, 0.0f, z + lz,
+//            0.0f, 1.0f, 0.0f);
 
 
-    traverse(&lamp_cone_node);
-    //glRotatef(90, 0, 0, 0);
+    gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
+            cam->eyeX + cam->directionX, cam->eyeY + cam->directionY, cam->eyeZ + cam->directionZ,
+            0, 1, 0);
 
-    traverse(&table_layer1_node);
+    drawGrid();
 
-    // placeLamp();
+    // glTranslatef(0, 0, 5);
 
-       //Teapot?
-       placeTeapot();
+    // glScalef(10, 10, 10);
+    traverse(&wall_floor_node);
 
-       //Table
-     //  placeTable();
+    //Teapot?
+    //placeTeapot();
 
-       GLfloat location[] = {0.0, 0.0, -5.0};
-       GLfloat rotate[] = {0.0, 0.0, 0.0, 0.0};
-       placeWall(startList + 9, location, rotate);
+/*    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(0.0, 0.0);
+    glVertex2f(-0.5, -0.5);
+    glVertex2f(-0.5, 0.0);
+    glVertex2f(-0.5, 0.5);
+    glVertex2f(0.0, 0.8);
+    glVertex2f(0.5, 0.5);
+    glVertex2f(0.5, 0.0);
+    glVertex2f(0.5, -0.5);
+    glVertex2f(0.0, -0.5);
+    glVertex2f(0.0, 0.0);
+    glEnd();*/
 
-       GLfloat location1[] = {0.0, 5.0, 0.0};
-       GLfloat rotate1[] = {90.0, 0.0, 0.0, 0.0};
-       placeWall(startList + 10, location1, rotate1);
     glutSwapBuffers();
 
     glFlush();
@@ -198,70 +262,101 @@ void display(void) {
     return;
 }
 
+void drawGrid() {
+    glLineWidth(5.0);
+
+    materials(&red);
+
+    glBegin(GL_LINES);
+    glVertex3f(0, 0, -100.0f);
+    glVertex3f(0, 0, 100.0f);
+    glEnd();
+
+    materials(&blue);
+
+    glBegin(GL_LINES);
+    glVertex3f(0, -100, 0.0f);
+    glVertex3f(0, 100, 0.0f);
+    glEnd();
+
+    materials(&green);
+
+    glBegin(GL_LINES);
+    glVertex3f(-100.0f, 0, 0.0f);
+    glVertex3f(100.0f, 0, 0.0f);
+    glEnd();
+
+    glTranslatef(0, 0, -5);
+    glLineWidth(2.0);
+
+    drawVerticalGrid();
+    drawHorizontalGrid();
+    glLineWidth(1.0);
+
+}
+
+void drawVerticalGrid() {
+    for (int i = -100; i < 100; i++) {
+        //  glColor4f(0.0f,1.0f,0.0f,1.0f);//Change the object color to red
+        materials(&white);
+        glBegin(GL_LINES);
+        glVertex3f(-100.0f, 0, i);
+        glVertex3f(100.0f, 0, i);
+        glEnd();
+    }
+}
+
+void drawHorizontalGrid() {
+    for (int i = -100; i < 100; i++) {
+        materials(&white);
+
+        glBegin(GL_LINES);
+        glVertex3f(i, 0.0f, -100);
+        glVertex3f(i, 0.0f, 100);
+        glEnd();
+    }
+}
+
 void reshape(int w, int h) {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    if (w <= h)
-        glOrtho(-5, 5, -5 * (GLfloat) h / (GLfloat) w,
-                5 * (GLfloat) h / (GLfloat) w, -100.0, 100.0);
-    else
-        glOrtho(-2.5 * (GLfloat) w / (GLfloat) h,
-                2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, -10.0, 10.0);
+//    if (w <= h)
+    glFrustum(-1, 1, -1, 1, 1.5, 150);
+//    glFrustum(-2.5 * (GLfloat) w / (GLfloat) h,
+//            2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, 1.5, 10.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
-void keyboard(unsigned char key, int x, int y) {
+/*void specialKey1(int key, int x, int y) {
+    float fraction = 0.1f;
+
     switch (key) {
-        case 27:
-            exit(0);
+        case GLUT_KEY_LEFT :
+            angle -= 0.1f;
+            lx = sin(angle);
+            lz = -cos(angle);
+            break;
+        case GLUT_KEY_RIGHT :
+            angle += 0.1f;
+            lx = sin(angle);
+            lz = -cos(angle);
+            break;
+        case GLUT_KEY_UP :
+            x += lx * fraction;
+            z += lz * fraction;
+            break;
+        case GLUT_KEY_DOWN :
+            x -= lx * fraction;
+            z -= lz * fraction;
             break;
     }
-}
 
-void specialKey(int key, int x, int y) {
-    switch (key) {
-        default:
 
-        case GLUT_KEY_UP:
-            printf("%fX", eyeZ);
-            printf("\n");
-
-            upY += 1.0;
-            break;
-        case GLUT_KEY_DOWN:
-            printf("%fX", eyeZ);
-            printf("\n");
-
-            upY -= 1.0;
-            break;
-        case GLUT_KEY_LEFT:
-            printf("%fY", eyeY);
-            printf("\n");
-
-            //  eyeY -= 1.0;
-            theta[axis] -= 5.0;
-
-            break;
-        case GLUT_KEY_RIGHT:
-            printf("%fY", eyeY);
-            printf("\n");
-
-            //eyeY += 1.0;
-            theta[axis] += 5.0;
-
-            break;
-
-    }
     glutPostRedisplay();
-}
+}*/
 
-
-void spin() {
-    angle += 3.0;
-    glutPostRedisplay();
-}
 
 int main(int argc, const char *argv[]) {
 
@@ -275,12 +370,15 @@ int main(int argc, const char *argv[]) {
     // glutIdleFunc(spin);
     glutSpecialFunc(specialKey);
     glutMouseFunc(mouse);
+    glutMotionFunc(motion);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
     glutMainLoop();
 
     return 0;
 }
+
+
 
 
 

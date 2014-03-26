@@ -3,20 +3,22 @@
 
 GLuint startList;
 
-void placeLampCone();
+void placeLampCone(GLuint list, GLfloat trans [], GLfloat rotate []);
 
-void placeLampPole();
+void placeLampPole(GLuint list, GLfloat trans [], GLfloat rotate []);
 
-void placeLampBase();
+void placeLampBase(GLuint list, GLfloat trans [], GLfloat rotate []);
 
-void placeTeapot();
+void placeTeapot(GLfloat trans [], GLfloat rotate []);
 
 void placeTable();
 
-void placeTableLayer(GLuint list, GLfloat trans []);
+void placeTableLayer(GLuint list, GLfloat trans [], GLfloat rotate [], GLfloat pDouble []);
 
-void placeTableLeg(GLint, GLfloat []);
+void placeTableInnerBeam(GLuint list, GLfloat trans [], GLfloat rotate []);
 
-void placeWall(GLuint list, GLfloat trans [], GLfloat rotate []);
+void placeWall(GLuint list, GLfloat trans [], GLfloat rotate [], GLfloat pDouble []);
+
+void placeTableLeg(GLuint list, GLfloat trans [], GLfloat rotate [], GLfloat scale []);
 
 void placeLamp();

@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C184B27C7909398FE9DC3976 /* LampDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B1A37FA16D100079EB6A /* LampDrawer.c */; };
+		C184B0B66708618A91897A3D /* WallDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B1081E74544339C1AFB6 /* WallDrawer.c */; };
+		C184B1991F3F07CED5FFB31B /* TableDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BB1369CEE25F73A096D1 /* TableDrawer.c */; };
 		C184B2C92000FEB10E5B477F /* inspiration.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BD2885678EC74B61C66F /* inspiration.c */; };
+		C184B3B5B9F3841D16C698A7 /* WallDrawer.h in Sources */ = {isa = PBXBuildFile; fileRef = C184B7174F808AD7FCC500D3 /* WallDrawer.h */; };
+		C184B67C8C148AEB26D34948 /* LampDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BEC9AA3E2749D6481F52 /* LampDrawer.c */; };
 		C184B6AEE3482D3959E13485 /* MaterialTypes.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B35CA4459A87CEDD8FDD /* MaterialTypes.c */; };
 		C184B87194E8A393BCD8D7EF /* TreeNode.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BE2FF616E1DF1C847064 /* TreeNode.c */; };
 		C184BAD10095F2C24DED4454 /* ObjectCreator.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B62B7C5AA9797BCECA52 /* ObjectCreator.c */; };
-		C184BBF970E7C76199C4EB9F /* TableDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BC75FF52E99A15B7316B /* TableDrawer.c */; };
 		C184BDEE3D87BE9FA1272D14 /* Placement.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BFA7FECDDBB403FCE2FE /* Placement.c */; };
+		C184BE29D8ED69542C14E5EE /* Input.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B5ADFE95C2D9FC4EB0EF /* Input.c */; };
+		C184BFBE36DB94AC991D2435 /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = C184BCAC5EC727AB51A73AA3 /* Camera.m */; };
 		C87930E318CE31C90018281C /* LivingRoomScene.c in Sources */ = {isa = PBXBuildFile; fileRef = C87930E218CE31C90018281C /* LivingRoomScene.c */; };
 /* End PBXBuildFile section */
 
@@ -30,19 +34,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C184B1A37FA16D100079EB6A /* LampDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LampDrawer.c; sourceTree = "<group>"; };
+		C184B1081E74544339C1AFB6 /* WallDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WallDrawer.c; sourceTree = "<group>"; };
 		C184B26EDF650F1174EF9B21 /* TreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		C184B35CA4459A87CEDD8FDD /* MaterialTypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MaterialTypes.c; sourceTree = "<group>"; };
+		C184B440CD80D9E44D59515E /* LampDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LampDrawer.h; path = Lamp/LampDrawer.h; sourceTree = "<group>"; };
+		C184B48629BBB9CE56E9A387 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = LivingRoom/Cameras/Camera.h; sourceTree = SOURCE_ROOT; };
+		C184B5ADFE95C2D9FC4EB0EF /* Input.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Input.c; sourceTree = "<group>"; };
 		C184B62B7C5AA9797BCECA52 /* ObjectCreator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ObjectCreator.c; sourceTree = "<group>"; };
+		C184B7174F808AD7FCC500D3 /* WallDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallDrawer.h; sourceTree = "<group>"; };
 		C184B73FDFC6BFBE18FDAE14 /* ObjectCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectCreator.h; sourceTree = "<group>"; };
-		C184BAF83CED1B745DCDB792 /* LampDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LampDrawer.h; sourceTree = "<group>"; };
-		C184BC75FF52E99A15B7316B /* TableDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TableDrawer.c; sourceTree = "<group>"; };
+		C184B827F0C98654DA05E7B4 /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		C184BB1369CEE25F73A096D1 /* TableDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TableDrawer.c; path = Table/TableDrawer.c; sourceTree = "<group>"; };
+		C184BCAC5EC727AB51A73AA3 /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Camera.m; path = LivingRoom/Cameras/Camera.m; sourceTree = SOURCE_ROOT; };
 		C184BCF71C5E5E8BAA3FC8E9 /* Placement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Placement.h; sourceTree = "<group>"; };
 		C184BD2885678EC74B61C66F /* inspiration.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inspiration.c; sourceTree = "<group>"; };
-		C184BD7D62262FF7DF5F878D /* TableDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableDrawer.h; sourceTree = "<group>"; };
 		C184BE2FF616E1DF1C847064 /* TreeNode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TreeNode.c; sourceTree = "<group>"; };
 		C184BE94C49BE566E53B2CA4 /* LivingRoomScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingRoomScene.h; sourceTree = "<group>"; };
 		C184BEC54AA57D4DDB70A93A /* MaterialTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTypes.h; sourceTree = "<group>"; };
+		C184BEC9AA3E2749D6481F52 /* LampDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = LampDrawer.c; path = Lamp/LampDrawer.c; sourceTree = "<group>"; };
+		C184BF72E25C94DCA3A1E3B1 /* TableDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableDrawer.h; path = Table/TableDrawer.h; sourceTree = "<group>"; };
 		C184BFA7FECDDBB403FCE2FE /* Placement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Placement.c; sourceTree = "<group>"; };
 		C87930E218CE31C90018281C /* LivingRoomScene.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = LivingRoomScene.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,13 +77,24 @@
 			path = Structs;
 			sourceTree = "<group>";
 		};
+		C184B0E69F77B659DF5AEBB1 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				C184B5ADFE95C2D9FC4EB0EF /* Input.c */,
+				C184B827F0C98654DA05E7B4 /* Input.h */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
 		C184B1D89CB60513A6ABA117 /* Drawers */ = {
 			isa = PBXGroup;
 			children = (
-				C184B1A37FA16D100079EB6A /* LampDrawer.c */,
-				C184BAF83CED1B745DCDB792 /* LampDrawer.h */,
-				C184BC75FF52E99A15B7316B /* TableDrawer.c */,
-				C184BD7D62262FF7DF5F878D /* TableDrawer.h */,
+				C184BF72E25C94DCA3A1E3B1 /* TableDrawer.h */,
+				C184BB1369CEE25F73A096D1 /* TableDrawer.c */,
+				C184B440CD80D9E44D59515E /* LampDrawer.h */,
+				C184BEC9AA3E2749D6481F52 /* LampDrawer.c */,
+				C184B1081E74544339C1AFB6 /* WallDrawer.c */,
+				C184B7174F808AD7FCC500D3 /* WallDrawer.h */,
 			);
 			path = Drawers;
 			sourceTree = "<group>";
@@ -85,6 +106,15 @@
 				C184B73FDFC6BFBE18FDAE14 /* ObjectCreator.h */,
 			);
 			path = Creators;
+			sourceTree = "<group>";
+		};
+		C184BA6D89E1AA935F05D388 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				C184BCAC5EC727AB51A73AA3 /* Camera.m */,
+				C184B48629BBB9CE56E9A387 /* Camera.h */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		C184BC63D8C27E9FC31306C3 /* Placers */ = {
@@ -123,6 +153,8 @@
 				C184BE94C49BE566E53B2CA4 /* LivingRoomScene.h */,
 				C184B1D89CB60513A6ABA117 /* Drawers */,
 				C184BE6FDD1DA4CAD1D2DF34 /* Materials */,
+				C184B0E69F77B659DF5AEBB1 /* Input */,
+				C184BA6D89E1AA935F05D388 /* Camera */,
 			);
 			path = LivingRoom;
 			sourceTree = "<group>";
@@ -180,9 +212,13 @@
 				C184BDEE3D87BE9FA1272D14 /* Placement.c in Sources */,
 				C184BAD10095F2C24DED4454 /* ObjectCreator.c in Sources */,
 				C184B87194E8A393BCD8D7EF /* TreeNode.c in Sources */,
-				C184B27C7909398FE9DC3976 /* LampDrawer.c in Sources */,
-				C184BBF970E7C76199C4EB9F /* TableDrawer.c in Sources */,
 				C184B6AEE3482D3959E13485 /* MaterialTypes.c in Sources */,
+				C184B1991F3F07CED5FFB31B /* TableDrawer.c in Sources */,
+				C184B67C8C148AEB26D34948 /* LampDrawer.c in Sources */,
+				C184BE29D8ED69542C14E5EE /* Input.c in Sources */,
+				C184BFBE36DB94AC991D2435 /* Camera.m in Sources */,
+				C184B0B66708618A91897A3D /* WallDrawer.c in Sources */,
+				C184B3B5B9F3841D16C698A7 /* WallDrawer.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -267,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -292,6 +328,7 @@
 				C87930E818CE31C90018281C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
