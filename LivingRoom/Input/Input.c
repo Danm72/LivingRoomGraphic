@@ -61,30 +61,30 @@ void specialKey(int key, int x, int y) {
     switch (key) {
         // Camera Controls
         case GLUT_KEY_LEFT:
-/*            angleY -= 0.05f;
+            angleY -= 0.05f;
             printf("sinY y:%f\n", sin(angleY));
 
             cam-> directionX = sin(angleY);
-            cam->directionZ = -cos(angleY);*/
-            cam->directionZ=0;
+            cam->directionZ = -cos(angleY);
+/*            cam->directionZ=0;
             cam->directionX=5;
 
             cam->eyeX -= cam->directionX * fraction;
             cam->eyeZ -= cam->directionZ * fraction;
-            cam->eyeY -= cam->directionY * fraction;
+            cam->eyeY -= cam->directionY * fraction;*/
             break;
         case GLUT_KEY_RIGHT:
-/*            angleY += 0.05f;
+            angleY += 0.05f;
             printf("sinY y:%f\n", sin(angleY));
 
             cam-> directionX = sin(angleY);
-            cam-> directionZ = -cos(angleY);*/
-            cam->directionZ=0;
+            cam-> directionZ = -cos(angleY);
+/*            cam->directionZ=0;
             cam->directionX=5;
 
             cam->eyeX += cam->directionX * fraction;
             cam->eyeZ += cam->directionZ * fraction;
-            cam->eyeY += cam->directionY * fraction;
+            cam->eyeY += cam->directionY * fraction;*/
             break;
         case GLUT_KEY_UP:
             cam->directionZ=-5;
@@ -125,9 +125,9 @@ void mouse(int btn, int state, int x, int y) {
             float y1 = glutGet(GLUT_WINDOW_HEIGHT);
             printf("width y:%f\n", x1);
             printf("height x:%f\n", y1);
-            if (y < glutGet(GLUT_WINDOW_WIDTH) / 2)
+            if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
                 angleY -= 0.05f;
-            if (y > glutGet(GLUT_WINDOW_WIDTH) / 2)
+            if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
                 angleY += 0.05f;
 
             cam->directionX = sin(angleY);
@@ -165,7 +165,7 @@ void motion(int x, int y) {
 
     if (modifierButton == GLUT_ACTIVE_ALT) {
         if (y >= 0) {
-            cam->eyeY = y / 10;
+            cam->eyeY = y / 50;
 
         }
         printf("eyeZ:%f\n", cam->eyeZ);

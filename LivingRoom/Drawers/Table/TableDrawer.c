@@ -71,7 +71,7 @@ void drawTableLeg3() {
     GLUquadricObj *quadObj = gluNewQuadric();
 
     createTableLeg(quadObj, startList + 11);
-    GLfloat leg[] = {-3.5, 0.7, -4.5};
+    GLfloat leg[] = {-3.5, 0.7, -4.75};
     GLfloat rotate[] = {0, 0, 0.0, 0.0};
     GLfloat scale[] = {2.5, 15, 2.5};
 
@@ -83,7 +83,7 @@ void drawTableLeg4() {
     GLUquadricObj *quadObj = gluNewQuadric();
 
     createTableLeg(quadObj, startList + 12);
-    GLfloat leg[] = {3.5, 0.7, -4.5};
+    GLfloat leg[] = {3.5, 0.7, -4.75};
     GLfloat rotate[] = {0, 0, 0.0, 0.0};
     GLfloat scale[] = {2.5, 15, 2.5};
 

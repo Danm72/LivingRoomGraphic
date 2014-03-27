@@ -26,3 +26,31 @@ void drawFloor(){
     placeWall(startList + 9, location, rotate, scale);
 
 }
+
+
+void drawLeftWall() {
+    GLUquadricObj *quadObj = gluNewQuadric();
+
+    createWall(quadObj, startList + 13);
+
+    GLfloat location[] = {-5.0, 5.0, 0.0};
+    GLfloat rotate[] = {0.0, 0.0, 0.0, 0.0};
+    GLfloat scale[] = {1.0, 100.0, 100.0};
+
+    placeWall(startList + 13, location, rotate, scale);
+
+}
+
+
+void drawRightWall() {
+    GLUquadricObj *quadObj = gluNewQuadric();
+
+    createWall(quadObj, startList + 14);
+
+    GLfloat location[] = {5.0, 5.0, 0.0};
+    GLfloat rotate[] = {0.0, 0.0, 0.0, 0.0};
+    GLfloat scale[] = {1.0, 100.0, 100.0};
+
+    placeWall(startList + 14, location, rotate, scale);
+
+}

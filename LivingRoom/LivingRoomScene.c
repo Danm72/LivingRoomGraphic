@@ -11,12 +11,16 @@
 #import <stdlib.h>
 #import "Input.h"
 #import "WallDrawer.h"
+#include "SolidCube_Tex.h"
 
 static GLfloat theta [] = {0.0, 0.0, 0.0};
 static GLint axis = 2;
 GLUquadricObj *quadObj;
 camera cam1;
 camera *cam = &cam1;
+
+GLfloat lightpos1[] = {0.0, 5.0, 3.0, 1.0};
+GLfloat lightpos2[] = {0.0, 1.0, -1.0,1.0};
 
 float angle = 0.0;
 // actual vector representing the camera's direction
@@ -43,7 +47,8 @@ treenode table_leg4_node;
 
 treenode wall_back_node;
 treenode wall_floor_node;
-
+treenode wall_left_node;
+treenode wall_right_node;
 
 GLfloat xPos = 0.0;
 GLfloat zPos = 1.0;
@@ -77,7 +82,7 @@ void errorCallback(GLenum errorCode) {
 void init(void) {
     initInputHandler(cam);
     createLightingEnv();
-    glLoadIdentity();
+//    glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
 
     cam->eyeX = 0;
     cam->eyeY = 1;
@@ -92,7 +97,7 @@ void init(void) {
     cam-> directionZ = -5.0;
     cam-> directionY = 0.0;
 
-    startList = glGenLists(14);
+    startList = glGenLists(15);
     quadObj = gluNewQuadric();
 
     setupWallNodes();
@@ -189,8 +194,18 @@ void setupWallNodes() {
 
     glGetFloatv(GL_MODELVIEW, wall_back_node.m);
     wall_back_node.drawingFunction = drawBackWall;
-    wall_back_node.sibling = NULL;
+    wall_back_node.sibling = &wall_left_node;
     wall_back_node.child = NULL;
+
+    glGetFloatv(GL_MODELVIEW, wall_left_node.m);
+    wall_left_node.drawingFunction = drawLeftWall;
+    wall_left_node.sibling = &wall_right_node;
+    wall_left_node.child = NULL;
+
+    glGetFloatv(GL_MODELVIEW, wall_right_node.m);
+    wall_right_node.drawingFunction = drawRightWall;
+    wall_right_node.sibling = NULL;
+    wall_right_node.child = NULL;
 
 }
 
@@ -203,12 +218,66 @@ void light(void) {
 void createLightingEnv() {
 
     glEnable(GL_DEPTH_TEST);
+//    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+//    glShadeModel (GL_SMOOTH);
 
-    GLfloat lightpos[] = {0.0, 0.0, 0.0, 1.0};
+    glEnable(GL_LIGHT1);
 
-    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+    glEnable(GL_MODELVIEW);
+    glLoadIdentity();
+
+
+
+//    glLightfv(GL_LIGHT0, GL_POINT, lightpos);
+
+    GLfloat bluish [] = {0.9f, 0.9f, 0.9f, 1};
+
+    //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 5);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, bluish);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, bluish);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, bluish);
+
+   // glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
+
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, bluish);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, bluish);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, bluish);
+
+//    light();
+
+//    GL POSITION, GL DIFFUSE,
+//            GL SPECULAR and GL AMBIENT.
+
+}
+
+
+void freeTexture(GLuint texture) {
+    glDeleteTextures(1, &texture);
+}
+
+void square() {
+
+    glPushMatrix();
+
+//    glBegin(GL_QUADS);
+//    glTexCoord2f(0.0, 0.0);
+//    glVertex2f(0.0f, 0.0f);              // Top Left
+//
+//    glTexCoord2f(1.0, 0.0);
+//    glVertex2f(1.0f, 0.0f);              // Top Right
+//
+//    glTexCoord2f(1, 1);
+//    glVertex2f(1.0f, 1.0f);              // Bottom Right
+//
+//    glTexCoord2f(0.0, 1.0);
+//    glVertex2f(0.0f, 1.0f);
+//
+//    glEnd();
+
+    glutSolidCube_tex(1);
+    glPopMatrix();
 
 }
 
@@ -217,22 +286,41 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, lightpos1);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
     glLoadIdentity();
 
 /*    gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
             cam->centerX, cam->centerY, cam->centerZ,
             cam->upX, cam->upY, cam->upZ);*/
 
-//    gluLookAt(x, 10.0f, z,
-//            x + lx, 0.0f, z + lz,
-//            0.0f, 1.0f, 0.0f);
-
+/*    gluLookAt(x, 10.0f, z,
+            x + lx, 0.0f, z + lz,
+            0.0f, 1.0f, 0.0f);*/
 
     gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
             cam->eyeX + cam->directionX, cam->eyeY + cam->directionY, cam->eyeZ + cam->directionZ,
             0, 1, 0);
 
+    glEnable(GL_TEXTURE_2D);
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+   GLuint texture = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/LaminatedOak.bmp", 100, 100);
+//    ImageLoad("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_256.bmp", <#(Image*)image#>)
+    square();
+
+    glDisable(GL_TEXTURE_2D);
+
     drawGrid();
+
+
+/*
+    GLubyte image[64][64][3];
+    glEnable(GL_TEXTURE_2D);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 64, 64, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+*/
+
 
     // glTranslatef(0, 0, 5);
 
@@ -329,36 +417,8 @@ void reshape(int w, int h) {
     glLoadIdentity();
 }
 
-/*void specialKey1(int key, int x, int y) {
-    float fraction = 0.1f;
-
-    switch (key) {
-        case GLUT_KEY_LEFT :
-            angle -= 0.1f;
-            lx = sin(angle);
-            lz = -cos(angle);
-            break;
-        case GLUT_KEY_RIGHT :
-            angle += 0.1f;
-            lx = sin(angle);
-            lz = -cos(angle);
-            break;
-        case GLUT_KEY_UP :
-            x += lx * fraction;
-            z += lz * fraction;
-            break;
-        case GLUT_KEY_DOWN :
-            x -= lx * fraction;
-            z -= lz * fraction;
-            break;
-    }
-
-
-    glutPostRedisplay();
-}*/
-
-
 int main(int argc, const char *argv[]) {
+    //glEnable(GL_TEXTURE_2D);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);

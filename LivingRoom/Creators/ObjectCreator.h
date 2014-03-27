@@ -21,3 +21,5 @@ void createTableLayer(GLUquadricObj *obj, GLuint list);
 
 void createWall(GLUquadricObj *obj, GLuint list);
 
+GLuint LoadTexture(const char *filename, int width, int
+height);
