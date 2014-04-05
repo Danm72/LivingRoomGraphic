@@ -1,6 +1,6 @@
 #import "GLUT/glut.h"
 
-typedef struct camera {
+typedef struct {
     GLdouble eyeX;
     GLdouble eyeY;
     GLdouble eyeZ;
@@ -10,7 +10,4 @@ typedef struct camera {
     GLdouble upX;
     GLdouble upY;
     GLdouble upZ;
-    GLfloat directionX;
-    GLfloat directionY;
-    GLfloat directionZ;
 } camera;

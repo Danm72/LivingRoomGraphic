@@ -87,7 +87,7 @@ void init(void)
     gluQuadricNormals(qobj, GLU_SMOOTH);
     glNewList(startList, GL_COMPILE);
     gluSphere(qobj, 0.75, 15, 10);
-    glEndList();
+    //glEndList();;
 
     gluQuadricDrawStyle(qobj, GLU_FILL); */
 /* flat shaded *//*
@@ -95,7 +95,7 @@ void init(void)
     gluQuadricNormals(qobj, GLU_FLAT);
     glNewList(startList+1, GL_COMPILE);
     gluCylinder(qobj, 0.5, 0.3, 1.0, 15, 5);
-    glEndList();
+    //glEndList();;
 
     gluQuadricDrawStyle(qobj, GLU_LINE); */
 /* wireframe *//*
@@ -103,13 +103,13 @@ void init(void)
     gluQuadricNormals(qobj, GLU_NONE);
     glNewList(startList+2, GL_COMPILE);
     gluDisk(qobj, 0.25, 1.0, 20, 4);
-    glEndList();
+    //glEndList();;
 
     gluQuadricDrawStyle(qobj, GLU_SILHOUETTE);
     gluQuadricNormals(qobj, GLU_NONE);
     glNewList(startList+3, GL_COMPILE);
     gluPartialDisk(qobj, 0.0, 1.0, 20, 4, 0.0, 225.0);
-    glEndList();
+    //glEndList();;
 }
 
 void display(void)

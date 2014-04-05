@@ -11,22 +11,17 @@
 #import <stdlib.h>
 #import "Input.h"
 #import "WallDrawer.h"
-#include "SolidCube_Tex.h"
+#include "MaterialTypes.h"
+#include "LampDrawer.h"
+#import "StageDrawer.h"
 
 static GLfloat theta [] = {0.0, 0.0, 0.0};
 static GLint axis = 2;
-GLUquadricObj *quadObj;
-camera cam1;
-camera *cam = &cam1;
+//camera cam1;
+camera *cam;
 
 GLfloat lightpos1[] = {0.0, 5.0, 3.0, 1.0};
-GLfloat lightpos2[] = {0.0, 1.0, -1.0,1.0};
-
-float angle = 0.0;
-// actual vector representing the camera's direction
-float lx = 0.0f, lz = -1.0f;
-// XZ position of the camera
-float x = 0.0f, z = 0.0f;
+GLfloat lightpos2[] = {0.0, 1.0, -1.0, 1.0};
 
 GLfloat whiteSpecularLight[] = {1.0, 1.0, 1.0};
 GLfloat blackAmbientLight[] = {0.0, 0.0, 0.0};
@@ -50,22 +45,8 @@ treenode wall_floor_node;
 treenode wall_left_node;
 treenode wall_right_node;
 
-GLfloat xPos = 0.0;
-GLfloat zPos = 1.0;
-GLfloat yPos = 2.0;
-
-
-void setupLampNodes();
-
-void setupTableNodes();
-
-void drawHorizontalGrid();
-
-void drawVerticalGrid();
-
-void drawGrid();
-
-void setupWallNodes();
+treenode stage_level1_node;
+treenode stage_level2_node;
 
 void errorCallback(GLenum errorCode) {
     const GLubyte *estring;
@@ -82,23 +63,23 @@ void errorCallback(GLenum errorCode) {
 void init(void) {
     initInputHandler(cam);
     createLightingEnv();
-//    glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
+
+    cam = malloc(sizeof *cam);
 
     cam->eyeX = 0;
     cam->eyeY = 1;
     cam->eyeZ = -5;
     cam->centerX = 0;
     cam->centerY = 0;
-    cam->centerZ = 0;
+    cam->centerZ = -5;
     cam->upX = 0;
     cam->upY = 1;
     cam->upZ = 0;
-    cam-> directionX = 0.0;
-    cam-> directionZ = -5.0;
-    cam-> directionY = 0.0;
+//    cam-> directionX = 0.0;
+//    cam-> directionZ = -5.0;
+//    cam-> directionY = 0.0;
 
-    startList = glGenLists(15);
-    quadObj = gluNewQuadric();
+    startList = glGenLists(30);
 
     setupWallNodes();
 
@@ -106,7 +87,9 @@ void init(void) {
 
     setupTableNodes();
 
-    gluQuadricCallback(quadObj, GLU_ERROR, (GLvoid ( *)()) errorCallback);
+    setupStage();
+
+//    gluQuadricCallback(qobj, GLU_ERROR, (GLvoid ( *)()) errorCallback);
 }
 
 /*
@@ -162,14 +145,14 @@ void setupTableNodes() {
     glGetFloatv(GL_MODELVIEW, table_inner2_node.m);
     table_inner2_node.drawingFunction = drawTableInner2;
     table_inner2_node.sibling = NULL;
-    table_inner2_node.child = NULL;
+    table_inner2_node.child = &lamp_cone_node;
 }
 
 void setupLampNodes() {
     glLoadIdentity();
     glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
     lamp_cone_node.drawingFunction = drawCone;
-    lamp_cone_node.sibling = &table_layer1_node;
+    lamp_cone_node.sibling = NULL;
     lamp_cone_node.child = &lamp_pole_node;
 
     glLoadIdentity();
@@ -190,7 +173,7 @@ void setupWallNodes() {
     glGetFloatv(GL_MODELVIEW, wall_floor_node.m);
     wall_floor_node.drawingFunction = drawFloor;
     wall_floor_node.sibling = &wall_back_node;
-    wall_floor_node.child = &lamp_cone_node;
+    wall_floor_node.child = &table_layer1_node;
 
     glGetFloatv(GL_MODELVIEW, wall_back_node.m);
     wall_back_node.drawingFunction = drawBackWall;
@@ -205,15 +188,31 @@ void setupWallNodes() {
     glGetFloatv(GL_MODELVIEW, wall_right_node.m);
     wall_right_node.drawingFunction = drawRightWall;
     wall_right_node.sibling = NULL;
-    wall_right_node.child = NULL;
+    wall_right_node.child = &stage_level1_node;
 
 }
+
+
+void setupStage() {
+    glGetFloatv(GL_MODELVIEW, stage_level1_node.m);
+    stage_level1_node.drawingFunction = drawLvl1;
+    stage_level1_node.sibling = NULL;
+    stage_level1_node.child = &stage_level2_node;
+
+    glGetFloatv(GL_MODELVIEW, stage_level2_node.m);
+    stage_level2_node.drawingFunction = drawLvl2;
+    stage_level2_node.sibling = NULL;
+    stage_level2_node.child = NULL;
+
+}
+
 
 void light(void) {
     glLightfv(GL_LIGHT0, GL_SPECULAR, whiteSpecularLight);
     glLightfv(GL_LIGHT0, GL_AMBIENT, blackAmbientLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuseLight);
 }
+
 
 void createLightingEnv() {
 
@@ -239,46 +238,17 @@ void createLightingEnv() {
     glLightfv(GL_LIGHT0, GL_SPECULAR, bluish);
     glLightfv(GL_LIGHT0, GL_AMBIENT, bluish);
 
-   // glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
+    // glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
 
     glLightfv(GL_LIGHT1, GL_DIFFUSE, bluish);
     glLightfv(GL_LIGHT1, GL_SPECULAR, bluish);
     glLightfv(GL_LIGHT1, GL_AMBIENT, bluish);
-
-//    light();
-
-//    GL POSITION, GL DIFFUSE,
-//            GL SPECULAR and GL AMBIENT.
 
 }
 
 
 void freeTexture(GLuint texture) {
     glDeleteTextures(1, &texture);
-}
-
-void square() {
-
-    glPushMatrix();
-
-//    glBegin(GL_QUADS);
-//    glTexCoord2f(0.0, 0.0);
-//    glVertex2f(0.0f, 0.0f);              // Top Left
-//
-//    glTexCoord2f(1.0, 0.0);
-//    glVertex2f(1.0f, 0.0f);              // Top Right
-//
-//    glTexCoord2f(1, 1);
-//    glVertex2f(1.0f, 1.0f);              // Bottom Right
-//
-//    glTexCoord2f(0.0, 1.0);
-//    glVertex2f(0.0f, 1.0f);
-//
-//    glEnd();
-
-    glutSolidCube_tex(1);
-    glPopMatrix();
-
 }
 
 void display(void) {
@@ -295,54 +265,18 @@ void display(void) {
             cam->centerX, cam->centerY, cam->centerZ,
             cam->upX, cam->upY, cam->upZ);*/
 
-/*    gluLookAt(x, 10.0f, z,
-            x + lx, 0.0f, z + lz,
-            0.0f, 1.0f, 0.0f);*/
-
     gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
-            cam->eyeX + cam->directionX, cam->eyeY + cam->directionY, cam->eyeZ + cam->directionZ,
+            cam->eyeX + cam->centerX, cam->eyeY + cam->centerY, cam->eyeZ + cam->centerZ,
             0, 1, 0);
 
-    glEnable(GL_TEXTURE_2D);
-    glColor3f(1.0f, 1.0f, 1.0f);
-
-   GLuint texture = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/LaminatedOak.bmp", 100, 100);
-//    ImageLoad("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_256.bmp", <#(Image*)image#>)
-    square();
-
-    glDisable(GL_TEXTURE_2D);
+//    gluLookAt(	x, 1.0f, z,
+//            x+lx, 1.0f, z+lz,
+//            0.0f, 1.0f, 0.0f);
 
     drawGrid();
 
-
-/*
-    GLubyte image[64][64][3];
-    glEnable(GL_TEXTURE_2D);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 64, 64, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-*/
-
-
-    // glTranslatef(0, 0, 5);
-
-    // glScalef(10, 10, 10);
+//    glLoadIdentity();
     traverse(&wall_floor_node);
-
-    //Teapot?
-    //placeTeapot();
-
-/*    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(0.0, 0.0);
-    glVertex2f(-0.5, -0.5);
-    glVertex2f(-0.5, 0.0);
-    glVertex2f(-0.5, 0.5);
-    glVertex2f(0.0, 0.8);
-    glVertex2f(0.5, 0.5);
-    glVertex2f(0.5, 0.0);
-    glVertex2f(0.5, -0.5);
-    glVertex2f(0.0, -0.5);
-    glVertex2f(0.0, 0.0);
-    glEnd();*/
-
     glutSwapBuffers();
 
     glFlush();
@@ -410,11 +344,15 @@ void reshape(int w, int h) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 //    if (w <= h)
-    glFrustum(-1, 1, -1, 1, 1.5, 150);
+    glFrustum(-1, 1, -1, 1, 1.0, 150);
 //    glFrustum(-2.5 * (GLfloat) w / (GLfloat) h,
 //            2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, 1.5, 10.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void idle() {
+    glutPostRedisplay();
 }
 
 int main(int argc, const char *argv[]) {
@@ -422,13 +360,14 @@ int main(int argc, const char *argv[]) {
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(100, 100);
     glutCreateWindow(argv[0]);
     init();
-    glutDisplayFunc(display);
-    // glutIdleFunc(spin);
     glutSpecialFunc(specialKey);
+    glutDisplayFunc(display);
+    glutIdleFunc(idle);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutReshapeFunc(reshape);

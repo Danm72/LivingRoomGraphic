@@ -11,8 +11,9 @@ GLdouble ox = 0.0, oy = 0.0, oz = 0.0;
 
 GLfloat angleX = 0.0;
 GLfloat angleY = 0.0;
-GLfloat centers [] = {0, 0, 0};
+GLfloat click [] = {0.0, 0.0};
 float fraction = 0.3f;
+
 
 void glCoordinatesFromGlut(int x, int y);
 
@@ -20,120 +21,58 @@ void initInputHandler(camera *cam1) {
     cam = cam1;
 }
 
-/*void specialKey(int key, int x, int y) {
-    switch (key) {
-        default:
-
-        case GLUT_KEY_UP:
-            //cam->eyeY += 5.0;
-            cam->centerY += 10.0;
-
-            break;
-        case GLUT_KEY_DOWN:
-            // cam->eyeY -= 5.0;
-            cam->centerY -= 10.0;
-
-            break;
-        case GLUT_KEY_LEFT:
-//            angle -= 0.1f;
-//
-//            //cam->eyeX += 10.0;
-//            cam->eyeX = sin(angle);
-
-            break;
-        case GLUT_KEY_RIGHT:
-//            angle += 0.1f;
-//            cam->eyeX = cam->eyeX + sin(angle);
-//            cam->eyeX = cos(angle);
-
-            //  cam->eyeX += 10.0;
-           // cam->centerX += 10.0;
-
-            break;
-
-    }
-    glutPostRedisplay();
-
-}*/
-
 void specialKey(int key, int x, int y) {
+    modifierButton = glutGetModifiers();
 
     switch (key) {
         // Camera Controls
         case GLUT_KEY_LEFT:
-            angleY -= 0.05f;
-            printf("sinY y:%f\n", sin(angleY));
+            angleX -= 0.05f;
+            cam->centerX = (GLfloat) sin(angleX);
+            cam->centerZ = (GLfloat) -cos(angleY);
 
-            cam-> directionX = sin(angleY);
-            cam->directionZ = -cos(angleY);
-/*            cam->directionZ=0;
-            cam->directionX=5;
-
-            cam->eyeX -= cam->directionX * fraction;
-            cam->eyeZ -= cam->directionZ * fraction;
-            cam->eyeY -= cam->directionY * fraction;*/
             break;
         case GLUT_KEY_RIGHT:
-            angleY += 0.05f;
-            printf("sinY y:%f\n", sin(angleY));
+            angleX += 0.05f;
 
-            cam-> directionX = sin(angleY);
-            cam-> directionZ = -cos(angleY);
-/*            cam->directionZ=0;
-            cam->directionX=5;
-
-            cam->eyeX += cam->directionX * fraction;
-            cam->eyeZ += cam->directionZ * fraction;
-            cam->eyeY += cam->directionY * fraction;*/
+            cam->centerX = (GLfloat) sin(angleX);
+            cam->centerZ = (GLfloat) -cos(angleX);
             break;
         case GLUT_KEY_UP:
-            cam->directionZ=-5;
-            cam->directionX=-0;
-            cam->eyeX += cam->directionX * fraction;
-            cam->eyeZ += cam->directionZ * fraction;
-            cam->eyeY += cam->directionY * fraction;
+            if (modifierButton == GLUT_ACTIVE_ALT) {
+                cam->eyeY += 0.1;
+
+            } else {
+                cam->eyeX += cam->centerX * fraction;
+                cam-> eyeZ += cam->centerZ * fraction;
+            }
             break;
         case GLUT_KEY_DOWN:
-            cam->directionZ=-5;
-            cam->directionX=-0;
-            cam->eyeX -= cam->directionX * fraction;
-            cam->eyeZ -= cam->directionZ * fraction;
-            cam->eyeY -= cam->directionY * fraction;
+            if (modifierButton == GLUT_ACTIVE_ALT) {
+
+                cam->eyeY -= 0.1;
+
+            } else {
+
+                cam->eyeX -= cam->centerX * fraction;
+                cam-> eyeZ -= cam->centerZ * fraction;
+            }
             break;
         default:
             break;
     }
-    glutPostRedisplay();
 
 }
 
-
 void mouse(int btn, int state, int x, int y) {
     glCoordinatesFromGlut(x, y);
+    click[0] = x;
+    click[1] = y;
 
     if (btn == GLUT_LEFT_BUTTON&& state == GLUT_DOWN) {
 
         if (state == GLUT_DOWN) {
             leftButton = 0;
-            //cam->centerX += ox;
-            //cam->eyeX = ox;
-            printf("sinY y:%f\n", sin(angleY));
-
-            /*         if (sin(angleY) >= 360)
-                         angleY = 0;*/
-            float x1 =  glutGet(GLUT_WINDOW_WIDTH);
-            float y1 = glutGet(GLUT_WINDOW_HEIGHT);
-            printf("width y:%f\n", x1);
-            printf("height x:%f\n", y1);
-            if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
-                angleY -= 0.05f;
-            if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
-                angleY += 0.05f;
-
-            cam->directionX = sin(angleY);
-            cam->directionZ = -cos(angleY);
-            printf("angleY y:%f\n", angleY);
-            printf("angleX x:%f\n", angleX);
 
         }
         else
@@ -150,48 +89,27 @@ void mouse(int btn, int state, int x, int y) {
             rightButton = 1;
     }
     modifierButton = glutGetModifiers();
-    glutPostRedisplay();
 
 }
 
 
 void motion(int x, int y) {
     glCoordinatesFromGlut(x, y);
+    GLfloat distX = click[0] - x;
+    GLfloat distY = click[1] - y;
 
     printf("output x:%f output y:%f output z:%f\n", ox, oy, oz);
 
-    float x1 = (x) / glutGet(GLUT_WINDOW_WIDTH);
-    float y1 = 1.0 - (y) / glutGet(GLUT_WINDOW_HEIGHT);
+    if (leftButton == 0) {
+        if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
+            angleY -= distY;
+        if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
+            angleY += distY;
 
-    if (modifierButton == GLUT_ACTIVE_ALT) {
-        if (y >= 0) {
-            cam->eyeY = y / 50;
+        cam->centerX = (GLfloat) sin(angleY);
+        cam->centerZ = (GLfloat) -cos(angleY);
 
-        }
-        printf("eyeZ:%f\n", cam->eyeZ);
-    } else {
-        if (leftButton == 0) {
-
-            /*     cam->eyeX += ox /50;
-                 cam->eyeY += oy / 50;*/
-
-            /*       cam->eyeX += cam->directionX * fraction;
-                   cam->eyeZ += cam->directionZ * fraction;
-                   cam->eyeY += cam->directionY * fraction;*/
-
-            printf("X:%f\n", cam->centerX);
-            printf("Y:%f\n", cam->centerY);
-
-        }
     }
-
-//    centers[0] = ox;
-//    centers[1] = oy;
-
-    printf("Center :%f\n", centers[0]);
-    printf("Center :%f\n", centers[1]);
-
-    glutPostRedisplay();
 
 }
 
@@ -218,9 +136,6 @@ void keyboard(unsigned char key, int x, int y) {
     if (key == 27) {
         exit(0);
     }
-    cam->centerX += ox;
-    cam->centerY += oy;
-
 
     if (key == 'w') {
         cam->eyeY += 10;
@@ -231,7 +146,5 @@ void keyboard(unsigned char key, int x, int y) {
     } else if (key == 'd') {
         cam->eyeX += 10;
     }
-    glutPostRedisplay();
-
 }
 
