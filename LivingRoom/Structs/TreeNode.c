@@ -4,7 +4,6 @@
 void traverse(treenode *root) {
     if (root == NULL) return;
     glPushMatrix();
-//    glLoadIdentity();
     glMultMatrixf(root->m);
     root->drawingFunction();
     if (root->child != NULL)

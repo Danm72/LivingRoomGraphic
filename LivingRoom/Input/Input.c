@@ -12,7 +12,7 @@ GLdouble ox = 0.0, oy = 0.0, oz = 0.0;
 GLfloat angleX = 0.0;
 GLfloat angleY = 0.0;
 GLfloat click [] = {0.0, 0.0};
-float fraction = 0.3f;
+float fraction = 0.5f;
 
 
 void glCoordinatesFromGlut(int x, int y);
@@ -27,20 +27,20 @@ void specialKey(int key, int x, int y) {
     switch (key) {
         // Camera Controls
         case GLUT_KEY_LEFT:
-            angleX -= 0.05f;
+            angleX -= 0.1f;
             cam->centerX = (GLfloat) sin(angleX);
             cam->centerZ = (GLfloat) -cos(angleY);
 
             break;
         case GLUT_KEY_RIGHT:
-            angleX += 0.05f;
+            angleX += 0.1f;
 
             cam->centerX = (GLfloat) sin(angleX);
             cam->centerZ = (GLfloat) -cos(angleX);
             break;
         case GLUT_KEY_UP:
             if (modifierButton == GLUT_ACTIVE_ALT) {
-                cam->eyeY += 0.1;
+                cam->eyeY += 1.0;
 
             } else {
                 cam->eyeX += cam->centerX * fraction;
@@ -50,7 +50,7 @@ void specialKey(int key, int x, int y) {
         case GLUT_KEY_DOWN:
             if (modifierButton == GLUT_ACTIVE_ALT) {
 
-                cam->eyeY -= 0.1;
+                cam->eyeY -= 1.0;
 
             } else {
 
@@ -102,9 +102,9 @@ void motion(int x, int y) {
 
     if (leftButton == 0) {
         if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
-            angleY -= distY;
-        if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
             angleY += distY;
+        if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
+            angleY -= distY;
 
         cam->centerX = (GLfloat) sin(angleY);
         cam->centerZ = (GLfloat) -cos(angleY);

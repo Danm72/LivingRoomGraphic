@@ -33,3 +33,5 @@ void materials(material *m);
 
 GLuint LoadTexture(const char *filename, int width, int
 height);
+
+void freeTexture(GLuint texture);

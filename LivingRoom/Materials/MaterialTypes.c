@@ -63,7 +63,7 @@ material emerald =
 
 material jade = {
         {
-                0.135, 0.2225, 0.1575, 0.54}, {0.89, 0.63, 0.316228, 0.316228, 0.316228}, 0.1 * 128
+                0.135, 0.2225, 0.1575, 0.54}, {0.89, 0.63, 0.316228, 0.316228}, 0.1 * 128
 };
 material obsidian = {{0.05375, 0.05, 0.06625}, {0.18275, 0.17, 0.22525}, {0.332741, 0.328634, 0.346435}, 0.3 * 128};
 material pearl = {{0.25, 0.20725, 0.20725, 1}, {0.829, 0.829, 0.296648}, {0.296648, 0.296648, 0.088 * 128}};
@@ -93,10 +93,15 @@ material green_plastic = {{0.0, 0.0, 0.0}, {0.1, 0.35, 0.1}, {0.45, 0.55, 0.45},
 
 
 void materials(material *m) {
+//    glEnable(GL_COLOR_MATERIAL);
+//
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, m->ambient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, m->diffuse);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, m->specular);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, m->shininess);
+//
+//    glDisable(GL_COLOR_MATERIAL);
+
 }
 
 GLuint LoadTexture(const char *filename, int width, int
@@ -114,18 +119,23 @@ height) {
     fclose(file);
 
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_3D, texture);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_3D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 
 
     free(data); //free the texture
     return texture; //return whether it was successfull
+}
+
+
+void freeTexture(GLuint texture) {
+    glDeleteTextures(1, &texture);
 }

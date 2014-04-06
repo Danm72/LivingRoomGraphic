@@ -20,8 +20,8 @@ static GLint axis = 2;
 //camera cam1;
 camera *cam;
 
-GLfloat lightpos1[] = {0.0, 5.0, 3.0, 1.0};
-GLfloat lightpos2[] = {0.0, 1.0, -1.0, 1.0};
+GLfloat lightpos1[] = {0.0, 10.0, -17.0, 1.0};
+GLfloat lightpos2[] = {0.0, 2.0, -17.0, 1.0};
 
 GLfloat whiteSpecularLight[] = {1.0, 1.0, 1.0};
 GLfloat blackAmbientLight[] = {0.0, 0.0, 0.0};
@@ -30,6 +30,11 @@ GLfloat whiteDiffuseLight[] = {1.0, 1.0, 1.0};
 treenode lamp_cone_node;
 treenode lamp_pole_node;
 treenode lamp_base_node;
+
+
+treenode lamp_cone2_node;
+treenode lamp_pole2_node;
+treenode lamp_base2_node;
 
 treenode table_layer1_node;
 treenode table_layer2_node;
@@ -61,8 +66,13 @@ void errorCallback(GLenum errorCode) {
 //};
 
 void init(void) {
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
     initInputHandler(cam);
-    createLightingEnv();
 
     cam = malloc(sizeof *cam);
 
@@ -75,11 +85,12 @@ void init(void) {
     cam->upX = 0;
     cam->upY = 1;
     cam->upZ = 0;
+
+    createLightingEnv();
+
 //    cam-> directionX = 0.0;
 //    cam-> directionZ = -5.0;
 //    cam-> directionY = 0.0;
-
-    startList = glGenLists(30);
 
     setupWallNodes();
 
@@ -149,23 +160,41 @@ void setupTableNodes() {
 }
 
 void setupLampNodes() {
-    glLoadIdentity();
     glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
     lamp_cone_node.drawingFunction = drawCone;
     lamp_cone_node.sibling = NULL;
     lamp_cone_node.child = &lamp_pole_node;
 
-    glLoadIdentity();
     glGetFloatv(GL_MODELVIEW, lamp_pole_node.m);
     lamp_pole_node.drawingFunction = drawPole;
     lamp_pole_node.sibling = NULL;
     lamp_pole_node.child = &lamp_base_node;
 
-    glLoadIdentity();
     glGetFloatv(GL_MODELVIEW, lamp_base_node.m);
     lamp_base_node.drawingFunction = drawBase;
-    lamp_base_node.sibling = NULL;
+    lamp_base_node.sibling = &lamp_cone2_node;
     lamp_base_node.child = NULL;
+
+    //Second lamp
+
+    glPushMatrix();
+    glTranslatef(6, 0, 0);
+
+    glGetFloatv(GL_MODELVIEW, lamp_cone2_node.m);
+    lamp_cone2_node.drawingFunction = drawCone;
+    lamp_cone2_node.sibling = NULL;
+    lamp_cone2_node.child = &lamp_pole2_node;
+    glPopMatrix();
+    glGetFloatv(GL_MODELVIEW, lamp_pole2_node.m);
+    lamp_pole2_node.drawingFunction = drawPole;
+    lamp_pole2_node.sibling = NULL;
+    lamp_pole2_node.child = &lamp_base2_node;
+
+    glGetFloatv(GL_MODELVIEW, lamp_base2_node.m);
+    lamp_base2_node.drawingFunction = drawBase;
+    lamp_base2_node.sibling = NULL;
+    lamp_base2_node.child = NULL;
+
 }
 
 void setupWallNodes() {
@@ -212,44 +241,74 @@ void light(void) {
     glLightfv(GL_LIGHT0, GL_AMBIENT, blackAmbientLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuseLight);
 }
+//GLfloat light_pos [] = {4.0, 4.0, -15.0, 1.0};
+GLfloat position[] = { 0.0f, 5.0f, -10.0f, 1.0f };
 
 
 void createLightingEnv() {
 
-    glEnable(GL_DEPTH_TEST);
 //    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-//    glShadeModel (GL_SMOOTH);
-
     glEnable(GL_LIGHT1);
+
+    glShadeModel (GL_SMOOTH);
+
 
     glEnable(GL_MODELVIEW);
     glLoadIdentity();
 
-
-
 //    glLightfv(GL_LIGHT0, GL_POINT, lightpos);
 
-    GLfloat bluish [] = {0.9f, 0.9f, 0.9f, 1};
+    GLfloat lightParams [] = {0.9f, 0.9f, 0.9f, 1};
+//
+//    //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 5);
+//    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightParams);
+//    glLightfv(GL_LIGHT0, GL_SPECULAR, lightParams);
+//    glLightfv(GL_LIGHT0, GL_AMBIENT, lightParams);
+//
+//    // glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
+//
+//    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightParams);
+//    glLightfv(GL_LIGHT1, GL_SPECULAR, lightParams);
+//    glLightfv(GL_LIGHT1, GL_AMBIENT, lightParams);
 
-    //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 5);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, bluish);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, bluish);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, bluish);
+    GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
+    GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 
-    // glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
+// Assign created components to GL_LIGHT0
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+//    glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, bluish);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, bluish);
-    glLightfv(GL_LIGHT1, GL_AMBIENT, bluish);
+    GLfloat light_dir [] = {0.0, -1.0, 0.0};
+    GLfloat cutoff = 90.0f;
+    GLfloat expo = 100;
+//
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_dir);
+    glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, &cutoff);
+    glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, expo);
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
+//    glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+//
+//    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, light_dir);
+//    glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, &cutoff);
+//    glLightf(GL_LIGHT1,GL_SPOT_EXPONENT, expo);
+//    GLfloat position2[] = { cam->eyeX, cam->eyeY, cam->eyeZ, 1.0f };
+//
+//    glLightfv(GL_LIGHT1, GL_POSITION, position2);
 
 }
 
 
-void freeTexture(GLuint texture) {
-    glDeleteTextures(1, &texture);
-}
 
 void display(void) {
 
@@ -257,25 +316,18 @@ void display(void) {
 
     glMatrixMode(GL_MODELVIEW);
 
-    glLightfv(GL_LIGHT0, GL_POSITION, lightpos1);
-    glLightfv(GL_LIGHT1, GL_POSITION, lightpos2);
-    glLoadIdentity();
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-/*    gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
-            cam->centerX, cam->centerY, cam->centerZ,
-            cam->upX, cam->upY, cam->upZ);*/
+    GLfloat position2[] = { cam->eyeX, cam->eyeY, cam->eyeZ, 1.0f };
+    glLightfv(GL_LIGHT1, GL_POSITION, position2);
+    glLoadIdentity();
 
     gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
             cam->eyeX + cam->centerX, cam->eyeY + cam->centerY, cam->eyeZ + cam->centerZ,
             0, 1, 0);
 
-//    gluLookAt(	x, 1.0f, z,
-//            x+lx, 1.0f, z+lz,
-//            0.0f, 1.0f, 0.0f);
-
     drawGrid();
 
-//    glLoadIdentity();
     traverse(&wall_floor_node);
     glutSwapBuffers();
 
@@ -347,8 +399,8 @@ void reshape(int w, int h) {
     glFrustum(-1, 1, -1, 1, 1.0, 150);
 //    glFrustum(-2.5 * (GLfloat) w / (GLfloat) h,
 //            2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, 1.5, 10.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
 }
 
 void idle() {

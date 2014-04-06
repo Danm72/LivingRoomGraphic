@@ -44,8 +44,7 @@ OpenGL(TM) is a trademark of Silicon Graphics, Inc.
 */
 #import "SolidCube_Tex.h"
 
-static void drawBox(GLfloat size, GLenum type,float repeats)
-{
+static void drawBox(GLfloat size, GLenum type, float repeats) {
     static GLfloat n[6][3] =
             {
                     {-1.0, 0.0, 0.0},
@@ -78,20 +77,15 @@ static void drawBox(GLfloat size, GLenum type,float repeats)
 
         glBegin(type);
         glNormal3fv(&n[i][0]);
-        glVertex3fv(&v[faces[i][0]][0]);
-        glTexCoord2f(0.0, 0.0);
-        glVertex3fv(&v[faces[i][1]][0]);
-        glTexCoord2f(repeats, 0.0);
-        glVertex3fv(&v[faces[i][2]][0]);
-        glTexCoord2f(repeats, repeats);
-        glVertex3fv(&v[faces[i][3]][0]);
-        glTexCoord2f(0.0, repeats);
+        glVertex3fv(&v[faces[i][0]][0]); glTexCoord2f(0.0, 0.0);
+        glVertex3fv(&v[faces[i][1]][0]); glTexCoord2f(0.0,repeats);
+        glVertex3fv(&v[faces[i][2]][0]); glTexCoord2f(repeats, repeats);
+        glVertex3fv(&v[faces[i][3]][0]); glTexCoord2f(repeats, 0.0);
         glEnd();
 
     }
 }
 
-void glutSolidCube_tex(GLdouble size,float repeats)
-{
-    drawBox(size, GL_QUADS,repeats);
+void glutSolidCube_tex(GLdouble size, float repeats) {
+    drawBox(size, GL_QUADS, repeats);
 }
