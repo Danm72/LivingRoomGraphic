@@ -26,7 +26,7 @@ void drawFloor() {
     glEnable(GL_TEXTURE_2D);
 
     placeItem( location, rotate, scale);
-    glBindTexture(GL_TEXTURE_2D, tex->wood);
+    glBindTexture(GL_TEXTURE_2D, tex->oak);
 
     createWall(quadObj, 10);
     glDisable(GL_TEXTURE_2D);

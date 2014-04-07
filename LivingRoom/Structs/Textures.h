@@ -10,5 +10,6 @@ typedef struct {
     GLuint wood_desk;
     GLuint fabric;
     GLuint frame;
+    GLuint leather;
 
 } textures;

@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
 #import <math.h>
 #import "Input.h"
+#include "MaterialTypes.h"
+#include "Drawer.h"
 
 camera *cam;
 int leftButton = 1;
@@ -13,7 +14,6 @@ GLfloat angleX = 0.0;
 GLfloat angleY = 0.0;
 GLfloat click [] = {0.0, 0.0};
 float fraction = 0.5f;
-
 
 void glCoordinatesFromGlut(int x, int y);
 
@@ -98,18 +98,16 @@ void motion(int x, int y) {
     GLfloat distX = click[0] - x;
     GLfloat distY = click[1] - y;
 
-    printf("output x:%f output y:%f output z:%f\n", ox, oy, oz);
-
-    if (leftButton == 0) {
-        if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
-            angleY += distY;
-        if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
-            angleY -= distY;
-
-        cam->centerX = (GLfloat) sin(angleY);
-        cam->centerZ = (GLfloat) -cos(angleY);
-
-    }
+//    if (leftButton == 0) {
+//        if (x < glutGet(GLUT_WINDOW_WIDTH) / 2)
+//            angleY += distY;
+//        if (x > glutGet(GLUT_WINDOW_WIDTH) / 2)
+//            angleY -= distY;
+//
+//        cam->centerX = (GLfloat) sin(angleY);
+//        cam->centerZ = (GLfloat) -cos(angleY);
+//
+//    }
 
 }
 
@@ -130,29 +128,48 @@ void glCoordinatesFromGlut(int x, int y) {
 
 void keyboard(unsigned char key, int x, int y) {
     glCoordinatesFromGlut(x, y);
-    printf("mouse x:%d mouse y:%d\n", x, y);
-    printf("output ox:%f output oy:%f output oz:%f\n", ox, oy, oz);
 
     if (key == 27) {
+        freeTexture(tex->wood);
+        freeTexture(tex->oak);
+        freeTexture(tex->bookshelf);
+        freeTexture(tex->wood_desk);
+        freeTexture(tex->frame);
+        freeTexture(tex->leather);
+
+        free(cam);
+        free(tex);
+
         exit(0);
     }
 
     if (key == 'w') {
-        cam->eyeY += 10;
+        cam->eyeX += cam->centerX * fraction;
+        cam-> eyeZ += cam->centerZ * fraction;
     } else if (key == 'a') {
         cam->eyeX -= 10;
     } else if (key == 's') {
-        cam->eyeY -= 10;
+        cam->eyeX -= cam->centerX * fraction;
+        cam-> eyeZ -= cam->centerZ * fraction;
     } else if (key == 'd') {
         cam->eyeX += 10;
-    } else if (key == 'l'){
+    } else if (key == '1') {
         glDisable(GL_LIGHT0);
-        glDisable(GL_LIGHT1);
-
-    }else if (key == 'o'){
+    } else if (key == '2') {
         glEnable(GL_LIGHT0);
+    } else if (key == '3') {
+        glDisable(GL_LIGHT1);
+    } else if (key == '4') {
         glEnable(GL_LIGHT1);
-
+    } else if (key == '5') {
+        glDisable(GL_LIGHT2);
+    } else if (key == '6') {
+        glEnable(GL_LIGHT2);
+    }else if (key == '|'){
+        if(cam->debugMode == 1)
+            cam->debugMode = 0;
+        else
+            cam->debugMode = 1;
     }
 }
 

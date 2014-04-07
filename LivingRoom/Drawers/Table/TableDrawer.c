@@ -2,9 +2,21 @@
 #import "TableDrawer.h"
 #include "SolidCube_Tex.h"
 #include "MaterialTypes.h"
-#include "Textures.h"
-#include "TreeNode.h"
 
+void drawTableLayer1();
+
+void drawTableLayer2();
+
+void drawTableInner1();
+
+void drawTableInner2();
+
+void drawTableLeg1();
+
+void drawTableLeg2();
+
+void drawTableLeg3();
+void placeTeapot();
 
 
 void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
@@ -200,7 +212,18 @@ void createTableLayer(GLUquadricObj *obj, GLuint list) {
     defineDrawStyle_Table(obj, list);
     glutSolidCube_tex(0.1, 1);
 
+}
 
+
+
+void placeTeapot() {
+    glPushMatrix();
+
+    materials(&gold);
+    glTranslatef(0.0, 2.5, -3.5);
+    glutSolidTeapot(0.5);
+
+    glPopMatrix();
 }
 
 
@@ -220,6 +243,11 @@ void setupTableNodes() {
     table_layer2_node.sibling = NULL;
     table_layer2_node.child = &table_leg1_node;
 
+    glGetFloatv(GL_MODELVIEW, teapot_node.m);
+    teapot_node.drawingFunction = placeTeapot;
+    teapot_node.sibling = NULL ;
+    teapot_node.child = NULL;
+
     glGetFloatv(GL_MODELVIEW, table_leg1_node.m);
     table_leg1_node.drawingFunction = drawTableLeg1;
     table_leg1_node.sibling = NULL;
@@ -237,7 +265,7 @@ void setupTableNodes() {
 
     glGetFloatv(GL_MODELVIEW, table_leg4_node.m);
     table_leg4_node.drawingFunction = drawTableLeg4;
-    table_leg4_node.sibling = NULL;
+    table_leg4_node.sibling = &teapot_node;
     table_leg4_node.child = &table_inner1_node;
 
     glGetFloatv(GL_MODELVIEW, table_inner1_node.m);

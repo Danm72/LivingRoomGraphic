@@ -138,8 +138,8 @@ void drawChairSeat() {
     placeItem( location2, rotate2, scale2);
 
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, tex->fabric);
-    glutSolidCube_tex(.1,10);
+    glBindTexture(GL_TEXTURE_2D, tex->leather);
+    glutSolidCube_tex(.1,1);
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
@@ -150,7 +150,6 @@ void drawChairSeat() {
 void drawChairBack() {
 
     glPushMatrix();
-    materials(&white);
     GLUquadricObj *quadObj = gluNewQuadric();
 
     defineDrawStyle_chair(quadObj);
@@ -160,7 +159,7 @@ void drawChairBack() {
     GLfloat scale2[] = {15.0, 30.0, 2.0};
     placeItem(location2, rotate2, scale2);
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, tex->fabric);
+    glBindTexture(GL_TEXTURE_2D, tex->leather);
     glutSolidCube_tex(.1,1);
     glDisable(GL_TEXTURE_2D);
 
@@ -174,13 +173,15 @@ void drawChairArm_left() {
     GLUquadricObj *quadObj = gluNewQuadric();
 
     defineDrawStyle_chair(quadObj);
-    materials(&black_plastic);
+    materials(&white);
     GLfloat location2[] = {.7, 2.5, -5.5};
     GLfloat rotate2[] = {0.0, 0.0, 0.0, 0.0};
     GLfloat scale2[] = {2.0, 2.0, 12.5};
     placeItem( location2, rotate2, scale2);
-
-    glutSolidCube_tex(.1,2);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, tex->leather);
+    glutSolidCube_tex(.1,1);
+    glDisable(GL_TEXTURE_2D);
 
     glPopMatrix();
     gluDeleteQuadric(quadObj);
@@ -190,15 +191,17 @@ void drawChairArm_left() {
 
 void drawChairArm_right() {
     glPushMatrix();
-    materials(&black_plastic);
+    materials(&white);
 
     GLfloat location2[] = {-.7, 2.5, -5.5};
     GLfloat rotate2[] = {0.0, 0.0, 0.0, 0.0};
     GLfloat scale2[] = {2.0, 2.0, 12.5};
     placeItem( location2, rotate2, scale2);
 
-    glutSolidCube_tex(.1,2);
-
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, tex->leather);
+    glutSolidCube_tex(.1,1);
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 }
 

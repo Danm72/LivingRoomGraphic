@@ -22,6 +22,8 @@ void drawCone() {
     placeItem(trans, rotate,scale);
 
     materials(&emerald);
+//    float no_mat [] = {1.0f, 1.0f, 1.0f, 1.0f};
+//    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, no_mat);
 
     defineDrawStyle_Lamp(quadObj, startList);
 
@@ -72,6 +74,8 @@ void drawBase() {
 
 
     gluCylinder(quadObj, 0.5, 0.5, 0.5, 30, 10);
+
+     glTranslatef(0, 0, .5);
     gluDisk(quadObj, 0, .5, 30, 30);
 
     glPopMatrix();
@@ -82,8 +86,11 @@ void drawBase() {
 
 
 void setupLampNodes() {
+
+
     glPushMatrix();
     glTranslatef(0, 0, 1.5);
+
     glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
     lamp_cone_node.drawingFunction = drawCone;
     lamp_cone_node.sibling = NULL;

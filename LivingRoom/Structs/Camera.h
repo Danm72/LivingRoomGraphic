@@ -10,4 +10,5 @@ typedef struct {
     GLdouble upX;
     GLdouble upY;
     GLdouble upZ;
+    int debugMode;
 } camera;
