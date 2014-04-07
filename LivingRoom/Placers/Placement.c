@@ -12,7 +12,7 @@ void placeTeapot(GLfloat trans [], GLfloat rotate []) {
 }
 
 
-void placeItem(GLuint list, GLfloat trans [], GLfloat rotate [], GLfloat scale []) {
+void placeItem(GLfloat trans [], GLfloat rotate [], GLfloat scale []) {
 //    glPushMatrix();
     //glColor3f(0,0,1);
     glTranslatef(trans[0], trans[1], trans[2]);

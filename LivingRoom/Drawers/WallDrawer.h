@@ -1,8 +1,14 @@
 #import "GLUT/glut.h"
+#import "Drawer.h"
+#include "TreeNode.h"
 
-static const int RIGHT_WALL = 14;
-
-static const int LEFT_WALL = 13;
+treenode wall_back_node;
+treenode wall_floor_node;
+treenode wall_left_node;
+treenode wall_right_node;
+treenode wall_roof1_node;
+treenode wall_roof2_node;
+treenode wall_roof3_node;
 
 static const int BACK_WALL = 10;
 
@@ -13,4 +19,8 @@ void drawBackWall();
 void drawFloor();
 void drawLeftWall();
 void drawRightWall();
-void createWall(GLUquadricObj *obj, GLuint list);
+void createWall(GLUquadricObj *obj, int repeats);
+void drawRoof2();
+void drawRoof1();
+void drawRoofBack();
+void setupWallNodes();

@@ -4,6 +4,4 @@ GLuint startList;
 
 void placeTeapot(GLfloat trans [], GLfloat rotate []);
 
-void placeLamp();
-
-void placeItem(GLuint list, GLfloat trans [], GLfloat rotate [], GLfloat scale []);
+void placeItem(GLfloat trans [], GLfloat rotate [], GLfloat scale []);

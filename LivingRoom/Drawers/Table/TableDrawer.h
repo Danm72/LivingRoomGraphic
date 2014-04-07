@@ -1,22 +1,19 @@
+#import "Drawer.h"
 #import  "Placement.h"
 
 #import "TableDrawer.h"
+#include "TreeNode.h"
 
-static const int TABLE_LAYER_1 = 3;
+treenode table_layer1_node;
+treenode table_layer2_node;
+treenode table_inner1_node;
+treenode table_inner2_node;
+treenode table_leg1_node;
+treenode table_leg2_node;
+treenode table_leg3_node;
+treenode table_leg4_node;
 
-static const int TABLE_LAYER_2 = 4;
-
-static const int TABLE_INNER_1 = 5;
-
-static const int TABLE_INNER_2 = 6;
-
-static const int TABLE_LEG_1 = 7;
-
-static const int TABLE_LEG_2 = 8;
-
-static const int TABLE_LEG_3 = 11;
-
-static const int TABLE_LEG_4 = 12;
+void setupTableNodes();
 
 void drawTableLayer1();
 

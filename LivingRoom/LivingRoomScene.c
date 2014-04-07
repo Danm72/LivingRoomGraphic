@@ -10,48 +10,13 @@
 #import <stdio.h>
 #import <stdlib.h>
 #import "Input.h"
-#import "WallDrawer.h"
 #include "MaterialTypes.h"
-#include "LampDrawer.h"
-#import "StageDrawer.h"
 
-static GLfloat theta [] = {0.0, 0.0, 0.0};
-static GLint axis = 2;
-//camera cam1;
 camera *cam;
+textures *tex;
 
 GLfloat lightpos1[] = {0.0, 10.0, -17.0, 1.0};
 GLfloat lightpos2[] = {0.0, 2.0, -17.0, 1.0};
-
-GLfloat whiteSpecularLight[] = {1.0, 1.0, 1.0};
-GLfloat blackAmbientLight[] = {0.0, 0.0, 0.0};
-GLfloat whiteDiffuseLight[] = {1.0, 1.0, 1.0};
-
-treenode lamp_cone_node;
-treenode lamp_pole_node;
-treenode lamp_base_node;
-
-
-treenode lamp_cone2_node;
-treenode lamp_pole2_node;
-treenode lamp_base2_node;
-
-treenode table_layer1_node;
-treenode table_layer2_node;
-treenode table_inner1_node;
-treenode table_inner2_node;
-treenode table_leg1_node;
-treenode table_leg2_node;
-treenode table_leg3_node;
-treenode table_leg4_node;
-
-treenode wall_back_node;
-treenode wall_floor_node;
-treenode wall_left_node;
-treenode wall_right_node;
-
-treenode stage_level1_node;
-treenode stage_level2_node;
 
 void errorCallback(GLenum errorCode) {
     const GLubyte *estring;
@@ -60,21 +25,19 @@ void errorCallback(GLenum errorCode) {
     exit(0);
 }
 
-//void (^translateBlock)(GLfloat []) = ^(GLfloat translateCoOrds []) {
-//
-//    glTranslatef(translateCoOrds[0], translateCoOrds[1],translateCoOrds[2]);
-//};
+#define PI 3.14159265
 
 void init(void) {
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_BACK);
 
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     initInputHandler(cam);
 
     cam = malloc(sizeof *cam);
+    tex = malloc(sizeof *tex);
 
     cam->eyeX = 0;
     cam->eyeY = 1;
@@ -87,10 +50,16 @@ void init(void) {
     cam->upZ = 0;
 
     createLightingEnv();
+    tex->bookcase = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/bookshelf_1024.bmp", 1024, 1024);
+    tex->cream = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/cream_256.bmp", 256, 256);
+    tex->wood = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_wall.bmp", 256, 256);
+    tex->oak = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/LaminatedOak.bmp", 720, 620);
+    tex->bookshelf = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/book_400.bmp", 400, 400);
+    tex->wood_desk = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_desk.bmp", 1024, 1024);
+    tex->fabric = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/fabric.bmp", 1024, 1024);
+    tex->frame = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/frame.bmp", 256, 256);
 
-//    cam-> directionX = 0.0;
-//    cam-> directionZ = -5.0;
-//    cam-> directionY = 0.0;
+    initTextures(tex);
 
     setupWallNodes();
 
@@ -100,149 +69,17 @@ void init(void) {
 
     setupStage();
 
-//    gluQuadricCallback(qobj, GLU_ERROR, (GLvoid ( *)()) errorCallback);
-}
+    setupBookCase();
 
-/*
-void setPosition(float angle, float posX, float posZ, float posY)
-{
-    xPos = posX;
-    zPos = posZ;
-    yPos = posY;
+    setupChair();
 
-    //compute instead of set based on angle
-    angleY = angle;
-    directionX = sin(angleY);
-    directionZ = -cos(angleY);
-}
-*/
-
-void setupTableNodes() {
-    glGetFloatv(GL_MODELVIEW, table_layer1_node.m);
-    table_layer1_node.drawingFunction = drawTableLayer1;
-    table_layer1_node.sibling = NULL;
-    table_layer1_node.child = &table_layer2_node;
-
-    glGetFloatv(GL_MODELVIEW, table_layer2_node.m);
-    table_layer2_node.drawingFunction = drawTableLayer2;
-    table_layer2_node.sibling = NULL;
-    table_layer2_node.child = &table_leg1_node;
-
-    glGetFloatv(GL_MODELVIEW, table_leg1_node.m);
-    table_leg1_node.drawingFunction = drawTableLeg1;
-    table_leg1_node.sibling = &table_leg2_node;
-    table_leg1_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, table_leg2_node.m);
-    table_leg2_node.drawingFunction = drawTableLeg2;
-    table_leg2_node.sibling = &table_leg3_node;
-    table_leg2_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, table_leg3_node.m);
-    table_leg3_node.drawingFunction = drawTableLeg3;
-    table_leg3_node.sibling = &table_leg4_node;
-    table_leg3_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, table_leg4_node.m);
-    table_leg4_node.drawingFunction = drawTableLeg4;
-    table_leg4_node.sibling = &table_inner1_node;
-    table_leg4_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, table_inner1_node.m);
-    table_inner1_node.drawingFunction = drawTableInner1;
-    table_inner1_node.sibling = &table_inner2_node;
-    table_inner1_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, table_inner2_node.m);
-    table_inner2_node.drawingFunction = drawTableInner2;
-    table_inner2_node.sibling = NULL;
-    table_inner2_node.child = &lamp_cone_node;
-}
-
-void setupLampNodes() {
-    glGetFloatv(GL_MODELVIEW, lamp_cone_node.m);
-    lamp_cone_node.drawingFunction = drawCone;
-    lamp_cone_node.sibling = NULL;
-    lamp_cone_node.child = &lamp_pole_node;
-
-    glGetFloatv(GL_MODELVIEW, lamp_pole_node.m);
-    lamp_pole_node.drawingFunction = drawPole;
-    lamp_pole_node.sibling = NULL;
-    lamp_pole_node.child = &lamp_base_node;
-
-    glGetFloatv(GL_MODELVIEW, lamp_base_node.m);
-    lamp_base_node.drawingFunction = drawBase;
-    lamp_base_node.sibling = &lamp_cone2_node;
-    lamp_base_node.child = NULL;
-
-    //Second lamp
-
-    glPushMatrix();
-    glTranslatef(6, 0, 0);
-
-    glGetFloatv(GL_MODELVIEW, lamp_cone2_node.m);
-    lamp_cone2_node.drawingFunction = drawCone;
-    lamp_cone2_node.sibling = NULL;
-    lamp_cone2_node.child = &lamp_pole2_node;
-    glPopMatrix();
-    glGetFloatv(GL_MODELVIEW, lamp_pole2_node.m);
-    lamp_pole2_node.drawingFunction = drawPole;
-    lamp_pole2_node.sibling = NULL;
-    lamp_pole2_node.child = &lamp_base2_node;
-
-    glGetFloatv(GL_MODELVIEW, lamp_base2_node.m);
-    lamp_base2_node.drawingFunction = drawBase;
-    lamp_base2_node.sibling = NULL;
-    lamp_base2_node.child = NULL;
-
-}
-
-void setupWallNodes() {
-
-    glGetFloatv(GL_MODELVIEW, wall_floor_node.m);
-    wall_floor_node.drawingFunction = drawFloor;
-    wall_floor_node.sibling = &wall_back_node;
-    wall_floor_node.child = &table_layer1_node;
-
-    glGetFloatv(GL_MODELVIEW, wall_back_node.m);
-    wall_back_node.drawingFunction = drawBackWall;
-    wall_back_node.sibling = &wall_left_node;
-    wall_back_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, wall_left_node.m);
-    wall_left_node.drawingFunction = drawLeftWall;
-    wall_left_node.sibling = &wall_right_node;
-    wall_left_node.child = NULL;
-
-    glGetFloatv(GL_MODELVIEW, wall_right_node.m);
-    wall_right_node.drawingFunction = drawRightWall;
-    wall_right_node.sibling = NULL;
-    wall_right_node.child = &stage_level1_node;
+    setupWindows();
 
 }
 
 
-void setupStage() {
-    glGetFloatv(GL_MODELVIEW, stage_level1_node.m);
-    stage_level1_node.drawingFunction = drawLvl1;
-    stage_level1_node.sibling = NULL;
-    stage_level1_node.child = &stage_level2_node;
-
-    glGetFloatv(GL_MODELVIEW, stage_level2_node.m);
-    stage_level2_node.drawingFunction = drawLvl2;
-    stage_level2_node.sibling = NULL;
-    stage_level2_node.child = NULL;
-
-}
-
-
-void light(void) {
-    glLightfv(GL_LIGHT0, GL_SPECULAR, whiteSpecularLight);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, blackAmbientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuseLight);
-}
 //GLfloat light_pos [] = {4.0, 4.0, -15.0, 1.0};
-GLfloat position[] = { 0.0f, 5.0f, -10.0f, 1.0f };
+GLfloat position[] = {0.0f, 5.0f, 0.0f, 0.0f};
 
 
 void createLightingEnv() {
@@ -252,7 +89,7 @@ void createLightingEnv() {
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
 
-    glShadeModel (GL_SMOOTH);
+    glShadeModel(GL_SMOOTH);
 
 
     glEnable(GL_MODELVIEW);
@@ -273,14 +110,22 @@ void createLightingEnv() {
 //    glLightfv(GL_LIGHT1, GL_SPECULAR, lightParams);
 //    glLightfv(GL_LIGHT1, GL_AMBIENT, lightParams);
 
-    GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-    GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
-    GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+//    GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+//    GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
+//    GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+
+    GLfloat ambientLight[] = {0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat diffuseLight[] = {0.9f, 0.9f, 0.9, 1.0f};
+    GLfloat specularLight[] = {0.9f, 0.9f, 0.9f, 1.0f};
+
+    float ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
+    float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
 
 // Assign created components to GL_LIGHT0
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 //    glLightfv(GL_LIGHT0, GL_POSITION, position);
 
     GLfloat light_dir [] = {0.0, -1.0, 0.0};
@@ -289,14 +134,14 @@ void createLightingEnv() {
 //
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_dir);
     glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, &cutoff);
-    glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, expo);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, expo);
     glLightfv(GL_LIGHT0, GL_POSITION, position);
 
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
     glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
-//    glLightfv(GL_LIGHT0, GL_POSITION, position);
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
 
 //
 //    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, light_dir);
@@ -309,7 +154,6 @@ void createLightingEnv() {
 }
 
 
-
 void display(void) {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -318,8 +162,8 @@ void display(void) {
 
     glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-    GLfloat position2[] = { cam->eyeX, cam->eyeY, cam->eyeZ, 1.0f };
-    glLightfv(GL_LIGHT1, GL_POSITION, position2);
+//    GLfloat position2[] = {cam->eyeX, cam->eyeY, cam->eyeZ, 1.0f};
+//    glLightfv(GL_LIGHT1, GL_POSITION, position2);
     glLoadIdentity();
 
     gluLookAt(cam->eyeX, cam->eyeY, cam->eyeZ,
@@ -329,6 +173,17 @@ void display(void) {
     drawGrid();
 
     traverse(&wall_floor_node);
+
+//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    float R = 5.0; // Radius of hemisphere.
+    int p = 6; // Number of longitudinal slices.
+    int q = 4; // Number of latitudinal slices.
+    float Xangle, Yangle, Zangle = 0.0; // Angles to rotate hemisphere.
+
+    glTranslatef(0, 5, 0);
+//    glRotatef(180, 1, 0, 0);
+    glScalef(.2, .3, .1);
+
     glutSwapBuffers();
 
     glFlush();
@@ -360,7 +215,7 @@ void drawGrid() {
     glVertex3f(100.0f, 0, 0.0f);
     glEnd();
 
-    glTranslatef(0, 0, -5);
+//    glTranslatef(0, 0, -5);
     glLineWidth(2.0);
 
     drawVerticalGrid();
@@ -371,7 +226,7 @@ void drawGrid() {
 
 void drawVerticalGrid() {
     for (int i = -100; i < 100; i++) {
-        //  glColor4f(0.0f,1.0f,0.0f,1.0f);//Change the object color to red
+
         materials(&white);
         glBegin(GL_LINES);
         glVertex3f(-100.0f, 0, i);
@@ -395,12 +250,16 @@ void reshape(int w, int h) {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-//    if (w <= h)
-    glFrustum(-1, 1, -1, 1, 1.0, 150);
-//    glFrustum(-2.5 * (GLfloat) w / (GLfloat) h,
-//            2.5 * (GLfloat) w / (GLfloat) h, -2.5, 2.5, 1.5, 10.0);
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
+//    if (w <= h){
+
+    GLfloat ratio = (GLfloat) w / (GLfloat) h;
+    glLoadIdentity();
+    if (w <= h) {
+        glFrustum(-1 / ratio, 1 / ratio, -1, 1, 1.0, 50.0);
+    } else {
+        glFrustum(-1 * ratio, 1 * ratio, -1, 1, 1.0, 50.0);
+    }
+
 }
 
 void idle() {
@@ -408,7 +267,6 @@ void idle() {
 }
 
 int main(int argc, const char *argv[]) {
-    //glEnable(GL_TEXTURE_2D);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
@@ -418,6 +276,7 @@ int main(int argc, const char *argv[]) {
     glutCreateWindow(argv[0]);
     init();
     glutSpecialFunc(specialKey);
+
     glutDisplayFunc(display);
     glutIdleFunc(idle);
     glutMouseFunc(mouse);
@@ -425,6 +284,13 @@ int main(int argc, const char *argv[]) {
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
     glutMainLoop();
+
+    freeTexture(tex->wood);
+    freeTexture(tex->oak);
+    freeTexture(tex->cream);
+    freeTexture(tex->bookcase);
+    freeTexture(tex->bookshelf);
+    freeTexture(tex->wood_desk);
 
     return 0;
 }

@@ -1,6 +1,10 @@
+#include <sys/_types/_null.h>
 #import "TableDrawer.h"
 #include "SolidCube_Tex.h"
 #include "MaterialTypes.h"
+#include "Textures.h"
+#include "TreeNode.h"
+
 
 
 void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
@@ -11,31 +15,51 @@ void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
 
 void drawTableLayer1() {
     GLUquadricObj *quadObj = gluNewQuadric();
+//    materials(&white);
 
-    GLfloat layer1[] = {0.0, 2.0, -3.75};
+    GLfloat layer[] = {0.0, 2.0, -3.75};
     GLfloat rotate[] = {0.0, 0.0, 0.0, 0.0};
     GLfloat scale[] = {75.0, 1.0, 25.0};
-    glTranslatef(0, 1, -15.0);
 
     glPushMatrix();
 
-    placeItem(startList + TABLE_LAYER_1, layer1, rotate, scale);
-    createTableLayer(quadObj, startList + TABLE_LAYER_1);
+    glPushMatrix();
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem( layer, rotate, scale);
+
+    createTableLayer(quadObj, 0);
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
 void drawTableLayer2() {
     GLUquadricObj *quadObj = gluNewQuadric();
+//    materials(&white);
 
-    GLfloat layer2[] = {0.0, 1.5, -3.75};
+    GLfloat layer[] = {0.0, 1.5, -3.75};
     GLfloat rotate[] = {0.0, 0.0, 0.0, 0.0};
     GLfloat scale[] = {75.0, 1.0, 25.0};
 
     glPushMatrix();
-    placeItem(startList + TABLE_LAYER_2, layer2, rotate, scale);
-    createTableLayer(quadObj, startList + TABLE_LAYER_2);
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem(layer, rotate, scale);
+
+    createTableLayer(quadObj,0);
+
+    glDisable(GL_TEXTURE_2D);
+
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
+
 }
 
 
@@ -47,9 +71,10 @@ void drawTableInner1() {
     GLfloat scale[] = {0, 0, 0};
     glPushMatrix();
 
-    placeItem(startList + TABLE_INNER_1, leg, rotate, scale);
-    createTableInnerBeam(quadObj, startList + TABLE_INNER_1);
+    placeItem( leg, rotate, scale);
+    createTableInnerBeam(quadObj, 0);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
@@ -62,9 +87,10 @@ void drawTableInner2() {
     GLfloat scale[] = {0, 0, 0};
     glPushMatrix();
 
-    placeItem(startList + TABLE_INNER_2, leg, rotate, scale);
-    createTableInnerBeam(quadObj, startList + TABLE_INNER_2);
+    placeItem( leg, rotate, scale);
+    createTableInnerBeam(quadObj, 0);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
@@ -76,10 +102,17 @@ void drawTableLeg1() {
     GLfloat rotate[] = {0, 0, 0.0, 0.0};
     GLfloat scale[] = {2.5, 15, 2.5};
     glPushMatrix();
-    placeItem(startList + TABLE_LEG_1, leg, rotate, scale);
-    createTableLeg(quadObj, startList + TABLE_LEG_1);
+    glEnable(GL_TEXTURE_2D);
 
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem( leg, rotate, scale);
+    createTableLeg(quadObj, 0);
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
+
 }
 
 void drawTableLeg2() {
@@ -91,9 +124,16 @@ void drawTableLeg2() {
 
     glPushMatrix();
 
-    placeItem(startList + TABLE_LEG_2, leg, rotate, scale);
-    createTableLeg(quadObj, startList + TABLE_LEG_2);
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem( leg, rotate, scale);
+    createTableLeg(quadObj, 0);
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
@@ -105,9 +145,16 @@ void drawTableLeg3() {
     GLfloat scale[] = {2.5, 15, 2.5};
 
     glPushMatrix();
-    placeItem(startList + TABLE_LEG_3, leg, rotate, scale);
-    createTableLeg(quadObj, startList + TABLE_LEG_3);
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem( leg, rotate, scale);
+    createTableLeg(quadObj, 0);
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
@@ -119,9 +166,17 @@ void drawTableLeg4() {
     GLfloat rotate[] = {0, 0, 0.0, 0.0};
     GLfloat scale[] = {2.5, 15, 2.5};
     glPushMatrix();
-    placeItem(startList + TABLE_LEG_4, leg, rotate, scale);
-    createTableLeg(quadObj, startList + TABLE_LEG_4);
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
+
+    placeItem( leg, rotate, scale);
+    createTableLeg(quadObj, 0);
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    gluDeleteQuadric(quadObj);
 
 }
 
@@ -130,25 +185,68 @@ void createTableInnerBeam(GLUquadricObj *obj, GLuint list) {
     defineDrawStyle_Table(obj, list);
     materials(&brass);
     gluCylinder(obj, 0.05, 0.05, .5, 4, 10);
+
 }
 
 
 void createTableLeg(GLUquadricObj *obj, GLuint list) {
     defineDrawStyle_Table(obj, list);
-    materials(&black_plastic);
+//    materials(&white);
     glutSolidCube_tex(0.1, 1);
+
 }
 
 void createTableLayer(GLUquadricObj *obj, GLuint list) {
     defineDrawStyle_Table(obj, list);
-//    materials(&copper);
-//    glEnable(GL_TEXTURE_2D);
-////    glPushMatrix();
-//    GLuint texture = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/LaminatedOak.bmp", 100, 100);
     glutSolidCube_tex(0.1, 1);
-//
-//    freeTexture(texture);
-//
-//    glDisable(GL_TEXTURE_2D);
-//    glPopMatrix();
+
+
+}
+
+
+void setupTableNodes() {
+    glPushMatrix();
+    glTranslatef(0, 0, -4.0);
+
+    glGetFloatv(GL_MODELVIEW, table_layer1_node.m);
+    table_layer1_node.drawingFunction = drawTableLayer1;
+    table_layer1_node.sibling = NULL;
+    table_layer1_node.child = &table_layer2_node;
+
+    glPopMatrix();
+
+    glGetFloatv(GL_MODELVIEW, table_layer2_node.m);
+    table_layer2_node.drawingFunction = drawTableLayer2;
+    table_layer2_node.sibling = NULL;
+    table_layer2_node.child = &table_leg1_node;
+
+    glGetFloatv(GL_MODELVIEW, table_leg1_node.m);
+    table_leg1_node.drawingFunction = drawTableLeg1;
+    table_leg1_node.sibling = NULL;
+    table_leg1_node.child = &table_leg2_node;
+
+    glGetFloatv(GL_MODELVIEW, table_leg2_node.m);
+    table_leg2_node.drawingFunction = drawTableLeg2;
+    table_leg2_node.sibling = NULL;
+    table_leg2_node.child = &table_leg3_node;
+
+    glGetFloatv(GL_MODELVIEW, table_leg3_node.m);
+    table_leg3_node.drawingFunction = drawTableLeg3;
+    table_leg3_node.sibling = NULL;
+    table_leg3_node.child = &table_leg4_node;
+
+    glGetFloatv(GL_MODELVIEW, table_leg4_node.m);
+    table_leg4_node.drawingFunction = drawTableLeg4;
+    table_leg4_node.sibling = NULL;
+    table_leg4_node.child = &table_inner1_node;
+
+    glGetFloatv(GL_MODELVIEW, table_inner1_node.m);
+    table_inner1_node.drawingFunction = drawTableInner1;
+    table_inner1_node.sibling = NULL;
+    table_inner1_node.child = &table_inner2_node;
+
+    glGetFloatv(GL_MODELVIEW, table_inner2_node.m);
+    table_inner2_node.drawingFunction = drawTableInner2;
+    table_inner2_node.sibling = &chair_legs_node;
+    table_inner2_node.child = &lamp_cone_node;
 }

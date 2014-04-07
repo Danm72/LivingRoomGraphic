@@ -29,7 +29,7 @@ void specialKey(int key, int x, int y) {
         case GLUT_KEY_LEFT:
             angleX -= 0.1f;
             cam->centerX = (GLfloat) sin(angleX);
-            cam->centerZ = (GLfloat) -cos(angleY);
+            cam->centerZ = (GLfloat) -cos(angleX);
 
             break;
         case GLUT_KEY_RIGHT:
@@ -145,6 +145,14 @@ void keyboard(unsigned char key, int x, int y) {
         cam->eyeY -= 10;
     } else if (key == 'd') {
         cam->eyeX += 10;
+    } else if (key == 'l'){
+        glDisable(GL_LIGHT0);
+        glDisable(GL_LIGHT1);
+
+    }else if (key == 'o'){
+        glEnable(GL_LIGHT0);
+        glEnable(GL_LIGHT1);
+
     }
 }
 

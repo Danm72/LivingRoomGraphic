@@ -99,7 +99,7 @@ void materials(material *m) {
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, m->diffuse);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, m->specular);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, m->shininess);
-//
+
 //    glDisable(GL_COLOR_MATERIAL);
 
 }
@@ -119,16 +119,16 @@ height) {
     fclose(file);
 
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_3D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glTexImage2D(GL_TEXTURE_3D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 
 
     free(data); //free the texture
