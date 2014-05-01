@@ -1,8 +1,5 @@
 #import "BookshelfDrawer.h"
-#include "Placement.h"
 #include "SolidCube_Tex.h"
-#include "TreeNode.h"
-
 
 
 void createBookCase(GLUquadricObj *obj, int repeats);
@@ -24,7 +21,7 @@ void drawBookCase() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
 
     createBookCase(quadObj, 2);
@@ -49,7 +46,7 @@ void drawBookFace() {
     glBindTexture(GL_TEXTURE_2D, tex->bookshelf);
 
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
 //    defineDrawStyle_shelf(quadObj);
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 0);

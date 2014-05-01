@@ -10,10 +10,10 @@
 #import <stdio.h>
 #import <stdlib.h>
 #import "Input.h"
-#include "MaterialTypes.h"
 
 camera *cam;
 textures *tex;
+item_mover *item_move;
 
 void init(void) {
     glEnable(GL_DEPTH_TEST);
@@ -23,9 +23,11 @@ void init(void) {
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     initInputHandler(cam);
+    initItemMover(item_move);
 
     cam = malloc(sizeof *cam);
     tex = malloc(sizeof *tex);
+    item_move = malloc(sizeof *item_move);
 
     cam->eyeX = 0;
     cam->eyeY = 5;
@@ -42,9 +44,14 @@ void init(void) {
     tex->wood = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_wall.bmp", 256, 256);
     tex->oak = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/LaminatedOak.bmp", 720, 620);
     tex->bookshelf = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/book_400.bmp", 400, 400);
-    tex->wood_desk = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_desk.bmp", 1024, 1024);
+    tex->wood_desk = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/wood_desk_512.bmp", 512, 512);
     tex->frame = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/frame.bmp", 256, 256);
-    tex->leather = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/brown.bmp",1024, 1024);
+    tex->leather = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/brown.bmp", 1024, 1024);
+
+    item_move->x =0;
+    item_move->y =0;
+    item_move->z =0;
+    item_move->itemToMove =0;
 
     initTextures(tex);
 
@@ -131,7 +138,7 @@ void display(void) {
             cam->eyeX + cam->centerX, cam->eyeY + cam->centerY, cam->eyeZ + cam->centerZ,
             0, 1, 0);
 
-    if(cam->debugMode ==0)
+    if (cam->debugMode == 0)
         drawGrid();
 
     traverse(&wall_floor_node);

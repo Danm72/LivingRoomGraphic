@@ -1,11 +1,5 @@
 #include <sys/_types/_null.h>
 #import "WallDrawer.h"
-#include "MaterialTypes.h"
-#include "Placement.h"
-#include "SolidCube_Tex.h"
-#include "Textures.h"
-#include "TreeNode.h"
-
 
 
 void defineDrawStyle_Walls(GLUquadricObj *qobj) {
@@ -25,7 +19,7 @@ void drawFloor() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->oak);
 
     createWall(quadObj, 10);
@@ -45,7 +39,7 @@ void drawRoof1() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
     materials(&white);
 
@@ -67,7 +61,7 @@ void drawRoof2() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
     materials(&white);
 
@@ -89,7 +83,7 @@ void drawRoofBack() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
     materials(&white);
     glBegin(GL_POLYGON);
@@ -123,7 +117,7 @@ void drawBackWall() {
 
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location1, rotate1, scale);
+    placeItem(location1, rotate1, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
 
     createWall(quadObj, 3);
@@ -146,7 +140,7 @@ void drawLeftWall() {
 
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
 
     createWall(quadObj, 3);
@@ -168,7 +162,7 @@ void drawRightWall() {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
 
-    placeItem(  location, rotate, scale);
+    placeItem(location, rotate, scale);
     glBindTexture(GL_TEXTURE_2D, tex->wood);
     defineDrawStyle_Walls(quadObj);
     materials(&pearl);
@@ -188,7 +182,6 @@ void createWall(GLUquadricObj *obj, int repeats) {
     glutSolidCube_tex(0.1, repeats);
 
 }
-
 
 
 void setupWallNodes() {

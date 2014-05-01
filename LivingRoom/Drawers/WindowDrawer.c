@@ -1,12 +1,5 @@
 #include <sys/_types/_null.h>
-#import "BookshelfDrawer.h"
-#include "MaterialTypes.h"
-#include "Placement.h"
-#include "SolidCube_Tex.h"
-#include "Textures.h"
-#include "TreeNode.h"
-
-
+#import "WindowDrawer.h"
 
 void defineDrawStyle_window(GLUquadricObj *qobj);
 
@@ -29,7 +22,7 @@ void drawWindowFace1() {
     glBindTexture(GL_TEXTURE_2D, tex->frame);
 
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
 //    defineDrawStyle_shelf(quadObj);
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 0);
@@ -63,7 +56,7 @@ void drawWindowFace2() {
     glBindTexture(GL_TEXTURE_2D, tex->frame);
 
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
 //    defineDrawStyle_shelf(quadObj);
     glBegin(GL_POLYGON);
     glTexCoord2f(0, 0);

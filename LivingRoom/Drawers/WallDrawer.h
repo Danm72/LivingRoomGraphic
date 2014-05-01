@@ -1,6 +1,6 @@
 #import "GLUT/glut.h"
 #import "Drawer.h"
-#include "TreeNode.h"
+#include "SolidCube_Tex.h"
 
 treenode wall_back_node;
 treenode wall_floor_node;
@@ -17,10 +17,17 @@ static const int FLOOR = 9;
 void drawBackWall();
 
 void drawFloor();
+
 void drawLeftWall();
+
 void drawRightWall();
+
 void createWall(GLUquadricObj *obj, int repeats);
+
 void drawRoof2();
+
 void drawRoof1();
+
 void drawRoofBack();
+
 void setupWallNodes();

@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #import <math.h>
+#include <stdio.h>
 #import "Input.h"
-#include "MaterialTypes.h"
-#include "Drawer.h"
 
 camera *cam;
+item_mover *item_move;
 int leftButton = 1;
 int rightButton = 1;
 int modifierButton;
@@ -21,18 +21,32 @@ void initInputHandler(camera *cam1) {
     cam = cam1;
 }
 
+void initItemMover(item_mover *item_move1) {
+    item_move = item_move1;
+}
+
 void specialKey(int key, int x, int y) {
     modifierButton = glutGetModifiers();
 
     switch (key) {
         // Camera Controls
         case GLUT_KEY_LEFT:
+            if (modifierButton == GLUT_ACTIVE_SHIFT) {
+                item_move->x = item_move->x - 1;
+                printf("%f + item selected", item_move->x);
+
+            }
             angleX -= 0.1f;
             cam->centerX = (GLfloat) sin(angleX);
             cam->centerZ = (GLfloat) -cos(angleX);
 
             break;
         case GLUT_KEY_RIGHT:
+            if (modifierButton == GLUT_ACTIVE_SHIFT) {
+                item_move->x = item_move->x + 1;
+                printf("%f + item selected", item_move->x);
+
+            }
             angleX += 0.1f;
 
             cam->centerX = (GLfloat) sin(angleX);
@@ -42,6 +56,8 @@ void specialKey(int key, int x, int y) {
             if (modifierButton == GLUT_ACTIVE_ALT) {
                 cam->eyeY += 1.0;
 
+            } else if (modifierButton == GLUT_ACTIVE_SHIFT) {
+                item_move->y = item_move->y + 1;
             } else {
                 cam->eyeX += cam->centerX * fraction;
                 cam-> eyeZ += cam->centerZ * fraction;
@@ -49,9 +65,10 @@ void specialKey(int key, int x, int y) {
             break;
         case GLUT_KEY_DOWN:
             if (modifierButton == GLUT_ACTIVE_ALT) {
-
                 cam->eyeY -= 1.0;
 
+            } else if (modifierButton == GLUT_ACTIVE_SHIFT) {
+                item_move->y = item_move->y - 1;
             } else {
 
                 cam->eyeX -= cam->centerX * fraction;
@@ -88,7 +105,7 @@ void mouse(int btn, int state, int x, int y) {
         else
             rightButton = 1;
     }
-    modifierButton = glutGetModifiers();
+//    modifierButton = glutGetModifiers();
 
 }
 
@@ -128,6 +145,7 @@ void glCoordinatesFromGlut(int x, int y) {
 
 void keyboard(unsigned char key, int x, int y) {
     glCoordinatesFromGlut(x, y);
+    int modifierButton = glutGetModifiers();
 
     if (key == 27) {
         freeTexture(tex->wood);
@@ -165,11 +183,24 @@ void keyboard(unsigned char key, int x, int y) {
         glDisable(GL_LIGHT2);
     } else if (key == '6') {
         glEnable(GL_LIGHT2);
-    }else if (key == '|'){
-        if(cam->debugMode == 1)
+    } else if (key == '|') {
+        if (cam->debugMode == 1)
             cam->debugMode = 0;
         else
             cam->debugMode = 1;
+    } else if ((int) key == 9) {
+        if (modifierButton == GLUT_ACTIVE_SHIFT) {
+            printf("%s", "SHIFT TAB");
+        } else {
+            printf("%s", "TAB");
+            if (item_move->itemToMove == 4) {
+                item_move->itemToMove = 1;
+            } else {
+                item_move->itemToMove = item_move->itemToMove + 1;
+            }
+            printf("%d + item selected", item_move->itemToMove);
+
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 #include <sys/_types/_null.h>
 #import "TreeNode.h"
 
+
 void traverse(treenode *root) {
     if (root == NULL) return;
     glPushMatrix();
@@ -12,3 +13,4 @@ void traverse(treenode *root) {
     if (root->sibling != NULL)
         traverse(root->sibling);
 }
+

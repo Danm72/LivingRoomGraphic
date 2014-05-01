@@ -1,6 +1,4 @@
 #import "LampDrawer.h"
-#include "MaterialTypes.h"
-
 
 
 void defineDrawStyle_Lamp(GLUquadricObj *qobj, GLuint startList1) {
@@ -16,10 +14,10 @@ void drawCone() {
 //
     GLfloat trans [] = {-3, 4.0, -4.5};
     GLfloat rotate [] = {270, 1, 0.0, 0.0};
-    GLfloat scale[] = {0,0,0};
+    GLfloat scale[] = {0, 0, 0};
 
     glPushMatrix();
-    placeItem(trans, rotate,scale);
+    placeItem(trans, rotate, scale);
 
     materials(&emerald);
 //    float no_mat [] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -38,11 +36,11 @@ void drawPole() {
 
     GLfloat trans [] = {-3, 2.0, -4.5};
     GLfloat rotate [] = {270, 1, 0.0, 0.0};
-    GLfloat scale[] = {0,0,0};
+    GLfloat scale[] = {0, 0, 0};
 
 
     glPushMatrix();
-    placeItem(trans, rotate,scale);
+    placeItem(trans, rotate, scale);
     defineDrawStyle_Lamp(quadObj, startList + 1);
     materials(&brass);
 
@@ -64,10 +62,10 @@ void drawBase() {
 
     GLfloat trans [] = {-3, 2.0, -4.5};
     GLfloat rotate [] = {270, 1, 0.0, 0.0};
-    GLfloat scale[] = {0,0,0};
+    GLfloat scale[] = {0, 0, 0};
 
     glPushMatrix();
-    placeItem(trans, rotate,scale);
+    placeItem(trans, rotate, scale);
 
     defineDrawStyle_Lamp(quadObj, startList + 2);
     materials(&ruby);
@@ -75,14 +73,13 @@ void drawBase() {
 
     gluCylinder(quadObj, 0.5, 0.5, 0.5, 30, 10);
 
-     glTranslatef(0, 0, .5);
+    glTranslatef(0, 0, .5);
     gluDisk(quadObj, 0, .5, 30, 30);
 
     glPopMatrix();
     gluDeleteQuadric(quadObj);
 
 }
-
 
 
 void setupLampNodes() {

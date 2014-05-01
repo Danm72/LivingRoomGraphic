@@ -10,3 +10,4 @@ typedef struct treenode {
 } treenode;
 
 void traverse(treenode *root);
+

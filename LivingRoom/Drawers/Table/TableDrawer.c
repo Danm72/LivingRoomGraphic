@@ -1,7 +1,5 @@
 #include <sys/_types/_null.h>
 #import "TableDrawer.h"
-#include "SolidCube_Tex.h"
-#include "MaterialTypes.h"
 
 void drawTableLayer1();
 
@@ -16,8 +14,10 @@ void drawTableLeg1();
 void drawTableLeg2();
 
 void drawTableLeg3();
+
 void placeTeapot();
 
+item_mover *item_move;
 
 void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
     /* flat shaded */
@@ -26,6 +26,15 @@ void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
 }
 
 void drawTableLayer1() {
+
+    int tb = TABLE_NUM;
+    if (item_move->itemToMove == tb) {
+//        glPushMatrix();
+
+        glTranslatef(item_move->x, item_move->y, item_move->z);
+//        glPopMatrix();
+    }
+
     GLUquadricObj *quadObj = gluNewQuadric();
 //    materials(&white);
 
@@ -40,7 +49,7 @@ void drawTableLayer1() {
 
     glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
 
-    placeItem( layer, rotate, scale);
+    placeItem(layer, rotate, scale);
 
     createTableLayer(quadObj, 0);
 
@@ -65,7 +74,7 @@ void drawTableLayer2() {
 
     placeItem(layer, rotate, scale);
 
-    createTableLayer(quadObj,0);
+    createTableLayer(quadObj, 0);
 
     glDisable(GL_TEXTURE_2D);
 
@@ -83,7 +92,7 @@ void drawTableInner1() {
     GLfloat scale[] = {0, 0, 0};
     glPushMatrix();
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableInnerBeam(quadObj, 0);
     glPopMatrix();
     gluDeleteQuadric(quadObj);
@@ -99,7 +108,7 @@ void drawTableInner2() {
     GLfloat scale[] = {0, 0, 0};
     glPushMatrix();
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableInnerBeam(quadObj, 0);
     glPopMatrix();
     gluDeleteQuadric(quadObj);
@@ -118,7 +127,7 @@ void drawTableLeg1() {
 
     glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableLeg(quadObj, 0);
 
     glDisable(GL_TEXTURE_2D);
@@ -140,7 +149,7 @@ void drawTableLeg2() {
 
     glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableLeg(quadObj, 0);
 
     glDisable(GL_TEXTURE_2D);
@@ -161,7 +170,7 @@ void drawTableLeg3() {
 
     glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableLeg(quadObj, 0);
 
     glDisable(GL_TEXTURE_2D);
@@ -183,7 +192,7 @@ void drawTableLeg4() {
 
     glBindTexture(GL_TEXTURE_2D, tex->wood_desk);
 
-    placeItem( leg, rotate, scale);
+    placeItem(leg, rotate, scale);
     createTableLeg(quadObj, 0);
 
     glDisable(GL_TEXTURE_2D);
@@ -213,7 +222,6 @@ void createTableLayer(GLUquadricObj *obj, GLuint list) {
     glutSolidCube_tex(0.1, 1);
 
 }
-
 
 
 void placeTeapot() {

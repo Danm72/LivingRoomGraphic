@@ -1,9 +1,5 @@
 #import "StageDrawer.h"
-#include "MaterialTypes.h"
 #include "SolidCube_Tex.h"
-#include "Placement.h"
-#include "TreeNode.h"
-
 
 
 void defineDrawStyle_Stage(GLUquadricObj *qobj, GLuint startList1) {
@@ -26,9 +22,9 @@ void drawLvl1() {
 
     glEnable(GL_TEXTURE_2D);
 
-    glBindTexture( GL_TEXTURE_2D, tex->oak);
+    glBindTexture(GL_TEXTURE_2D, tex->oak);
 
-    placeItem( location, rotate, scale);
+    placeItem(location, rotate, scale);
     glutSolidCube_tex(0.1, 1);
 
     glDisable(GL_TEXTURE_2D);
@@ -52,7 +48,7 @@ void drawLvl2() {
 
     glEnable(GL_TEXTURE_2D);
 
-    glBindTexture( GL_TEXTURE_2D, tex->oak);
+    glBindTexture(GL_TEXTURE_2D, tex->oak);
 
     placeItem(location, rotate, scale);
     glutSolidCube_tex(0.1, 1);
@@ -64,7 +60,6 @@ void drawLvl2() {
     gluDeleteQuadric(quadObj);
 
 }
-
 
 
 void setupStage() {
