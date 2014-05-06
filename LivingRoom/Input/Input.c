@@ -14,6 +14,10 @@ GLfloat angleX = 0.0;
 GLfloat angleY = 0.0;
 GLfloat click [] = {0.0, 0.0};
 float fraction = 0.5f;
+int bookcase = BOOKCASE_NUM;
+int table = TABLE_NUM;
+
+int chair = CHAIR_NUM;
 
 void glCoordinatesFromGlut(int x, int y);
 
@@ -31,46 +35,50 @@ void specialKey(int key, int x, int y) {
     switch (key) {
         // Camera Controls
         case GLUT_KEY_LEFT:
-            if (modifierButton == GLUT_ACTIVE_SHIFT) {
-                item_move->x = item_move->x - 1;
-                printf("%f + item selected", item_move->x);
 
-            }
             angleX -= 0.1f;
             cam->centerX = (GLfloat) sin(angleX);
             cam->centerZ = (GLfloat) -cos(angleX);
 
             break;
         case GLUT_KEY_RIGHT:
-            if (modifierButton == GLUT_ACTIVE_SHIFT) {
-                item_move->x = item_move->x + 1;
-                printf("%f + item selected", item_move->x);
 
-            }
             angleX += 0.1f;
 
             cam->centerX = (GLfloat) sin(angleX);
             cam->centerZ = (GLfloat) -cos(angleX);
+
             break;
         case GLUT_KEY_UP:
             if (modifierButton == GLUT_ACTIVE_ALT) {
                 cam->eyeY += 1.0;
 
             } else if (modifierButton == GLUT_ACTIVE_SHIFT) {
-                item_move->y = item_move->y + 1;
+                if (item_move->itemToMove == chair) {
+                    item_move->chairY = item_move->chairY + 1;
+
+                } else if (item_move->itemToMove == table) {
+                    item_move->tableY = item_move->tableY + 1;
+                }
             } else {
                 cam->eyeX += cam->centerX * fraction;
                 cam-> eyeZ += cam->centerZ * fraction;
             }
             break;
         case GLUT_KEY_DOWN:
+
             if (modifierButton == GLUT_ACTIVE_ALT) {
                 cam->eyeY -= 1.0;
 
-            } else if (modifierButton == GLUT_ACTIVE_SHIFT) {
-                item_move->y = item_move->y - 1;
-            } else {
+            }
+            else if (modifierButton == GLUT_ACTIVE_SHIFT) {
+                if (item_move->itemToMove == chair) {
+                    item_move->chairY = item_move->chairY - 1;
 
+                } else if (item_move->itemToMove == table) {
+                    item_move->tableY = item_move->tableY - 1;
+                }
+            } else {
                 cam->eyeX -= cam->centerX * fraction;
                 cam-> eyeZ -= cam->centerZ * fraction;
             }
@@ -161,16 +169,58 @@ void keyboard(unsigned char key, int x, int y) {
         exit(0);
     }
 
-    if (key == 'w') {
-        cam->eyeX += cam->centerX * fraction;
-        cam-> eyeZ += cam->centerZ * fraction;
-    } else if (key == 'a') {
-        cam->eyeX -= 10;
-    } else if (key == 's') {
-        cam->eyeX -= cam->centerX * fraction;
-        cam-> eyeZ -= cam->centerZ * fraction;
-    } else if (key == 'd') {
-        cam->eyeX += 10;
+    if (key == 'w' || key == 'W') {
+
+        if (modifierButton == GLUT_ACTIVE_SHIFT) {
+            if (item_move->itemToMove == chair) {
+                item_move->chairZ = item_move->chairZ - 1;
+
+            } else if (item_move->itemToMove == table) {
+                item_move->tableZ = item_move->tableZ - 1;
+            }
+        } else {
+            cam->eyeX += cam->centerX * fraction;
+            cam-> eyeZ += cam->centerZ * fraction;
+        }
+    } else if (key == 'a' || key == 'A') {
+
+        if (modifierButton == GLUT_ACTIVE_SHIFT) {
+            if (item_move->itemToMove == chair) {
+                item_move->chairX = item_move->chairX - 1;
+
+            } else if (item_move->itemToMove == table) {
+                item_move->tableX = item_move->tableX - 1;
+            }
+        } else {
+            cam->eyeX -= 10;
+        }
+
+    } else if (key == 's' || key == 'S') {
+
+        if (modifierButton == GLUT_ACTIVE_SHIFT) {
+            if (item_move->itemToMove == chair) {
+                item_move->chairZ = item_move->chairZ + 1;
+
+            } else if (item_move->itemToMove == table) {
+                item_move->tableZ = item_move->tableZ + 1;
+            }
+        } else {
+            cam->eyeX -= cam->centerX * fraction;
+            cam-> eyeZ -= cam->centerZ * fraction;
+        }
+
+    } else if (key == 'd' || key == 'D') {
+        if (modifierButton == GLUT_ACTIVE_SHIFT) {
+            if (item_move->itemToMove == chair) {
+                item_move->chairX = item_move->chairX + 1;
+
+            } else if (item_move->itemToMove == table) {
+                item_move->tableX = item_move->tableX + 1;
+            }
+        } else {
+            cam->eyeX += 10;
+        }
+
     } else if (key == '1') {
         glDisable(GL_LIGHT0);
     } else if (key == '2') {
@@ -190,15 +240,13 @@ void keyboard(unsigned char key, int x, int y) {
             cam->debugMode = 1;
     } else if ((int) key == 9) {
         if (modifierButton == GLUT_ACTIVE_SHIFT) {
-            printf("%s", "SHIFT TAB");
         } else {
-            printf("%s", "TAB");
-            if (item_move->itemToMove == 4) {
-                item_move->itemToMove = 1;
+
+            if (item_move->itemToMove == table) {
+                item_move->itemToMove = chair;
             } else {
                 item_move->itemToMove = item_move->itemToMove + 1;
             }
-            printf("%d + item selected", item_move->itemToMove);
 
         }
     }

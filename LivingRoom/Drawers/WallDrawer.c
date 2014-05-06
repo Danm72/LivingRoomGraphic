@@ -196,7 +196,7 @@ void setupWallNodes() {
 
     glGetFloatv(GL_MODELVIEW, wall_back_node.m);
     wall_back_node.drawingFunction = drawBackWall;
-    wall_back_node.sibling = NULL;
+    wall_back_node.sibling = &chair_legs_node;
     wall_back_node.child = &wall_left_node;
 
     glGetFloatv(GL_MODELVIEW, wall_left_node.m);

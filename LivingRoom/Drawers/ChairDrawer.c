@@ -1,5 +1,7 @@
 #include <stdio.h>
 #import "ChairDrawer.h"
+#import "Drawer.h"
+
 
 item_mover *item_move;
 
@@ -18,11 +20,14 @@ void defineDrawStyle_chair(GLUquadricObj *qobj) {
 
 void drawChairLegs() {
     int cn = CHAIR_NUM;
-    if (item_move->itemToMove == cn) {
-//        glPushMatrix();
+    glTranslatef(0, 0, -2);
 
-        glTranslatef(item_move->x, item_move->y, item_move->z);
-//        glPopMatrix();
+    glTranslatef(item_move->chairX, item_move->chairY, item_move->chairZ);
+
+    if (item_move->itemToMove == cn) {
+        glEnable(GL_COLOR_MATERIAL);
+
+        glColor3f(0.0f, 1.0f, 0.0f); //green
     }
 
     GLUquadricObj *quadObj = gluNewQuadric();
@@ -60,11 +65,12 @@ void drawChairLegs() {
     glPopMatrix();
     gluDeleteQuadric(quadObj);
 
+//    glClear(GL_COLOR_BUFFER_BIT);
+//    glDisable(GL_COLOR_MATERIAL);
 }
 
 
 void drawChairFeet() {
-
     GLUquadricObj *quadObj = gluNewQuadric();
 
     GLfloat rotate[] = {90.0, 1.0, 0.0, 0.0};
@@ -211,6 +217,8 @@ void drawChairArm_right() {
     glutSolidCube_tex(.1, 1);
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+
+    glDisable(GL_COLOR_MATERIAL);
 }
 
 
@@ -255,4 +263,6 @@ void setupChair() {
     chair_arm_right_node.drawingFunction = drawChairArm_right;
     chair_arm_right_node.sibling = NULL;
     chair_arm_right_node.child = NULL;
+
+
 }

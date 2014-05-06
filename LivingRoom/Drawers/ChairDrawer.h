@@ -1,4 +1,6 @@
-#import "Drawer.h"
+#ifndef _CHAIRDRAWER_H
+#define _CHAIRDRAWER_H
+
 #import "GLUT/glut.h"
 #include "TreeNode.h"
 
@@ -27,3 +29,5 @@ treenode chair_arm_left_node;
 treenode chair_arm_right_node;
 
 //void initItemMover(item_mover *item_move1);
+
+#endif

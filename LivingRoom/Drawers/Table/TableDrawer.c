@@ -28,11 +28,14 @@ void defineDrawStyle_Table(GLUquadricObj *qobj, GLuint startList1) {
 void drawTableLayer1() {
 
     int tb = TABLE_NUM;
-    if (item_move->itemToMove == tb) {
-//        glPushMatrix();
 
-        glTranslatef(item_move->x, item_move->y, item_move->z);
-//        glPopMatrix();
+    glTranslatef(item_move->tableX, item_move->tableY, item_move->tableZ);
+
+
+    if (item_move->itemToMove == tb) {
+        glEnable(GL_COLOR_MATERIAL);
+
+        glColor3f(0.0f, 1.0f, 0.0f); //green
     }
 
     GLUquadricObj *quadObj = gluNewQuadric();
@@ -220,7 +223,7 @@ void createTableLeg(GLUquadricObj *obj, GLuint list) {
 void createTableLayer(GLUquadricObj *obj, GLuint list) {
     defineDrawStyle_Table(obj, list);
     glutSolidCube_tex(0.1, 1);
-
+    glDisable(GL_COLOR_MATERIAL);
 }
 
 
@@ -283,6 +286,6 @@ void setupTableNodes() {
 
     glGetFloatv(GL_MODELVIEW, table_inner2_node.m);
     table_inner2_node.drawingFunction = drawTableInner2;
-    table_inner2_node.sibling = &chair_legs_node;
+    table_inner2_node.sibling = NULL;
     table_inner2_node.child = &lamp_cone_node;
 }

@@ -1,4 +1,6 @@
 #ifndef LIVINGROOMSCENE_H_
+#define LIVINGROOMSCENE_H_
+
 #import "Placement.h"
 #import "GLUT/glut.h"
 

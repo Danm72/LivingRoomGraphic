@@ -48,10 +48,13 @@ void init(void) {
     tex->frame = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/frame.bmp", 256, 256);
     tex->leather = LoadTexture("/Users/danmalone/Documents/Programming/2014/C:C++/LivingRoomGraphic/LivingRoom/Resources/brown.bmp", 1024, 1024);
 
-    item_move->x =0;
-    item_move->y =0;
-    item_move->z =0;
-    item_move->itemToMove =0;
+    item_move->chairX = 0;
+    item_move->chairY = 0;
+    item_move->chairZ = 0;
+    item_move->tableX = 0;
+    item_move->tableY = 0;
+    item_move->tableZ = 0;
+    item_move->itemToMove = 0;
 
     initTextures(tex);
 

@@ -1,0 +1,502 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C184B0B66708618A91897A3D /* WallDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B1081E74544339C1AFB6 /* WallDrawer.c */; };
+		C184B1991F3F07CED5FFB31B /* TableDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BB1369CEE25F73A096D1 /* TableDrawer.c */; };
+		C184B1D84A345AC09489627B /* ChairDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BEFDCF02615F7A35165D /* ChairDrawer.c */; };
+		C184B2B2F981D260E76E3069 /* StageDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BE82F16587591DE05590 /* StageDrawer.c */; };
+		C184B39927DEC0FD5F22C09B /* BookshelfDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BF056A0ED401C26330CA /* BookshelfDrawer.c */; };
+		C184B3B5B9F3841D16C698A7 /* WallDrawer.h in Sources */ = {isa = PBXBuildFile; fileRef = C184B7174F808AD7FCC500D3 /* WallDrawer.h */; };
+		C184B67C8C148AEB26D34948 /* LampDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BEC9AA3E2749D6481F52 /* LampDrawer.c */; };
+		C184B68D21A15F0298A7845E /* SolidCube_Tex.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B269B81A5785C775CCEC /* SolidCube_Tex.c */; };
+		C184B6AEE3482D3959E13485 /* MaterialTypes.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B35CA4459A87CEDD8FDD /* MaterialTypes.c */; };
+		C184B87194E8A393BCD8D7EF /* TreeNode.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BE2FF616E1DF1C847064 /* TreeNode.c */; };
+		C184BC6D548D3FF7157C45CA /* WindowDrawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B6AAAB9DAF9BC155EC33 /* WindowDrawer.c */; };
+		C184BCDD13B632CECD1134F5 /* Drawer.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B35369F9D2AA9D8BCD51 /* Drawer.c */; };
+		C184BDEE3D87BE9FA1272D14 /* Placement.c in Sources */ = {isa = PBXBuildFile; fileRef = C184BFA7FECDDBB403FCE2FE /* Placement.c */; };
+		C184BE29D8ED69542C14E5EE /* Input.c in Sources */ = {isa = PBXBuildFile; fileRef = C184B5ADFE95C2D9FC4EB0EF /* Input.c */; };
+		C87930E318CE31C90018281C /* LivingRoomScene.c in Sources */ = {isa = PBXBuildFile; fileRef = C87930E218CE31C90018281C /* LivingRoomScene.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C86DFFC218F0A9D1006986EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		C87930DD18CE31C90018281C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C184B07854F205A1DD016270 /* brown.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = brown.bmp; sourceTree = "<group>"; };
+		C184B1081E74544339C1AFB6 /* WallDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WallDrawer.c; sourceTree = "<group>"; };
+		C184B22544F90A0B733818A2 /* wood_desk.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wood_desk.bmp; sourceTree = "<group>"; };
+		C184B266002059F1F8CA1495 /* WindowDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowDrawer.h; sourceTree = "<group>"; };
+		C184B269B81A5785C775CCEC /* SolidCube_Tex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SolidCube_Tex.c; sourceTree = "<group>"; };
+		C184B26E92C0741A8592A7AF /* frame.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = frame.bmp; sourceTree = "<group>"; };
+		C184B26EDF650F1174EF9B21 /* TreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
+		C184B2A02DF6B1B34BDC927D /* StageDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageDrawer.h; sourceTree = "<group>"; };
+		C184B2A53C7BB7BB4B9C5593 /* ItemMover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemMover.h; sourceTree = "<group>"; };
+		C184B31BD8071ED72C0320ED /* book_400.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = book_400.bmp; sourceTree = "<group>"; };
+		C184B35369F9D2AA9D8BCD51 /* Drawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Drawer.c; sourceTree = "<group>"; };
+		C184B35CA4459A87CEDD8FDD /* MaterialTypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MaterialTypes.c; sourceTree = "<group>"; };
+		C184B440CD80D9E44D59515E /* LampDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LampDrawer.h; path = Lamp/LampDrawer.h; sourceTree = "<group>"; };
+		C184B54024A3EFE9BF6C59A3 /* ChairDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChairDrawer.h; sourceTree = "<group>"; };
+		C184B547D23869379F9083DF /* Drawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawer.h; sourceTree = "<group>"; };
+		C184B5ADFE95C2D9FC4EB0EF /* Input.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Input.c; sourceTree = "<group>"; };
+		C184B5D71BD270123401B537 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		C184B5DB7820015D5ECFAB20 /* wood_wall.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wood_wall.bmp; sourceTree = "<group>"; };
+		C184B6AAAB9DAF9BC155EC33 /* WindowDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WindowDrawer.c; sourceTree = "<group>"; };
+		C184B6D2965040D09D5CC9C4 /* SolidCube_Tex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidCube_Tex.h; sourceTree = "<group>"; };
+		C184B7174F808AD7FCC500D3 /* WallDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallDrawer.h; sourceTree = "<group>"; };
+		C184B7E53D8A73796D34EEC4 /* BookshelfDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookshelfDrawer.h; sourceTree = "<group>"; };
+		C184B827F0C98654DA05E7B4 /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		C184BB1369CEE25F73A096D1 /* TableDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TableDrawer.c; path = Table/TableDrawer.c; sourceTree = "<group>"; };
+		C184BC6A9719CB14BD29069C /* LaminatedOak.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = LaminatedOak.bmp; sourceTree = "<group>"; };
+		C184BCF71C5E5E8BAA3FC8E9 /* Placement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Placement.h; sourceTree = "<group>"; };
+		C184BD3CF8F0EF0157C68E8C /* wood_desk_512.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wood_desk_512.bmp; sourceTree = "<group>"; };
+		C184BD9A5BA26D2872CE7955 /* Textures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Textures.h; sourceTree = "<group>"; };
+		C184BDA443F174C11F8ADFB4 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		C184BE2FF616E1DF1C847064 /* TreeNode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TreeNode.c; sourceTree = "<group>"; };
+		C184BE82F16587591DE05590 /* StageDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StageDrawer.c; sourceTree = "<group>"; };
+		C184BE94C49BE566E53B2CA4 /* LivingRoomScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingRoomScene.h; sourceTree = "<group>"; };
+		C184BEC54AA57D4DDB70A93A /* MaterialTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTypes.h; sourceTree = "<group>"; };
+		C184BEC9AA3E2749D6481F52 /* LampDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = LampDrawer.c; path = Lamp/LampDrawer.c; sourceTree = "<group>"; };
+		C184BEFDCF02615F7A35165D /* ChairDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ChairDrawer.c; sourceTree = "<group>"; };
+		C184BF056A0ED401C26330CA /* BookshelfDrawer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BookshelfDrawer.c; sourceTree = "<group>"; };
+		C184BF72E25C94DCA3A1E3B1 /* TableDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableDrawer.h; path = Table/TableDrawer.h; sourceTree = "<group>"; };
+		C184BFA7FECDDBB403FCE2FE /* Placement.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Placement.c; sourceTree = "<group>"; };
+		C86DFFC418F0A9D1006986EF /* LivingRoomScene */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LivingRoomScene; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87930E218CE31C90018281C /* LivingRoomScene.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = LivingRoomScene.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C86DFFC118F0A9D1006986EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87930DC18CE31C90018281C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C184B03791574D4E9179B255 /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+				C184B26EDF650F1174EF9B21 /* TreeNode.h */,
+				C184BE2FF616E1DF1C847064 /* TreeNode.c */,
+				C184B269B81A5785C775CCEC /* SolidCube_Tex.c */,
+				C184B6D2965040D09D5CC9C4 /* SolidCube_Tex.h */,
+				C184B5D71BD270123401B537 /* Camera.h */,
+				C184BD9A5BA26D2872CE7955 /* Textures.h */,
+				C184B2A53C7BB7BB4B9C5593 /* ItemMover.h */,
+			);
+			path = Structs;
+			sourceTree = "<group>";
+		};
+		C184B0E69F77B659DF5AEBB1 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				C184B5ADFE95C2D9FC4EB0EF /* Input.c */,
+				C184B827F0C98654DA05E7B4 /* Input.h */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		C184B19454D568751532A43F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C184B31BD8071ED72C0320ED /* book_400.bmp */,
+				C184B22544F90A0B733818A2 /* wood_desk.bmp */,
+				C184B26E92C0741A8592A7AF /* frame.bmp */,
+				C184B07854F205A1DD016270 /* brown.bmp */,
+				C184BC6A9719CB14BD29069C /* LaminatedOak.bmp */,
+				C184B5DB7820015D5ECFAB20 /* wood_wall.bmp */,
+				C184BD3CF8F0EF0157C68E8C /* wood_desk_512.bmp */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C184B1D89CB60513A6ABA117 /* Drawers */ = {
+			isa = PBXGroup;
+			children = (
+				C184BF72E25C94DCA3A1E3B1 /* TableDrawer.h */,
+				C184BB1369CEE25F73A096D1 /* TableDrawer.c */,
+				C184B440CD80D9E44D59515E /* LampDrawer.h */,
+				C184BEC9AA3E2749D6481F52 /* LampDrawer.c */,
+				C184B1081E74544339C1AFB6 /* WallDrawer.c */,
+				C184B7174F808AD7FCC500D3 /* WallDrawer.h */,
+				C184BE82F16587591DE05590 /* StageDrawer.c */,
+				C184B2A02DF6B1B34BDC927D /* StageDrawer.h */,
+				C184B547D23869379F9083DF /* Drawer.h */,
+				C184B35369F9D2AA9D8BCD51 /* Drawer.c */,
+				C184BF056A0ED401C26330CA /* BookshelfDrawer.c */,
+				C184B7E53D8A73796D34EEC4 /* BookshelfDrawer.h */,
+				C184BEFDCF02615F7A35165D /* ChairDrawer.c */,
+				C184B54024A3EFE9BF6C59A3 /* ChairDrawer.h */,
+				C184B266002059F1F8CA1495 /* WindowDrawer.h */,
+				C184B6AAAB9DAF9BC155EC33 /* WindowDrawer.c */,
+			);
+			path = Drawers;
+			sourceTree = "<group>";
+		};
+		C184BC63D8C27E9FC31306C3 /* Placers */ = {
+			isa = PBXGroup;
+			children = (
+				C184BFA7FECDDBB403FCE2FE /* Placement.c */,
+				C184BCF71C5E5E8BAA3FC8E9 /* Placement.h */,
+			);
+			path = Placers;
+			sourceTree = "<group>";
+		};
+		C184BE6FDD1DA4CAD1D2DF34 /* Materials */ = {
+			isa = PBXGroup;
+			children = (
+				C184B35CA4459A87CEDD8FDD /* MaterialTypes.c */,
+				C184BEC54AA57D4DDB70A93A /* MaterialTypes.h */,
+			);
+			path = Materials;
+			sourceTree = "<group>";
+		};
+		C86DFFC518F0A9D1006986EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C86DFFC418F0A9D1006986EF /* LivingRoomScene */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C87930D318CE311B0018281C = {
+			isa = PBXGroup;
+			children = (
+				C87930E118CE31C90018281C /* LivingRoom */,
+				C86DFFC518F0A9D1006986EF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C87930E118CE31C90018281C /* LivingRoom */ = {
+			isa = PBXGroup;
+			children = (
+				C87930E218CE31C90018281C /* LivingRoomScene.c */,
+				C184BC63D8C27E9FC31306C3 /* Placers */,
+				C184B03791574D4E9179B255 /* Structs */,
+				C184BE94C49BE566E53B2CA4 /* LivingRoomScene.h */,
+				C184B1D89CB60513A6ABA117 /* Drawers */,
+				C184BE6FDD1DA4CAD1D2DF34 /* Materials */,
+				C184B0E69F77B659DF5AEBB1 /* Input */,
+				C184BDA443F174C11F8ADFB4 /* constants.h */,
+				C184B19454D568751532A43F /* Resources */,
+			);
+			path = LivingRoom;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C86DFFC318F0A9D1006986EF /* LivingRoomScene */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C86DFFCD18F0A9D1006986EF /* Build configuration list for PBXNativeTarget "LivingRoomScene" */;
+			buildPhases = (
+				C86DFFC018F0A9D1006986EF /* Sources */,
+				C86DFFC118F0A9D1006986EF /* Frameworks */,
+				C86DFFC218F0A9D1006986EF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LivingRoomScene;
+			productName = LivingRoomScene;
+			productReference = C86DFFC418F0A9D1006986EF /* LivingRoomScene */;
+			productType = "com.apple.product-type.tool";
+		};
+		C87930DE18CE31C90018281C /* LivingRoom */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C87930E618CE31C90018281C /* Build configuration list for PBXNativeTarget "LivingRoom" */;
+			buildPhases = (
+				C87930DB18CE31C90018281C /* Sources */,
+				C87930DC18CE31C90018281C /* Frameworks */,
+				C87930DD18CE31C90018281C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LivingRoom;
+			productName = LivingRoom;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C87930D418CE311B0018281C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = C87930D718CE311B0018281C /* Build configuration list for PBXProject "LivingRoomGraphic" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C87930D318CE311B0018281C;
+			productRefGroup = C86DFFC518F0A9D1006986EF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C87930DE18CE31C90018281C /* LivingRoom */,
+				C86DFFC318F0A9D1006986EF /* LivingRoomScene */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C86DFFC018F0A9D1006986EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87930DB18CE31C90018281C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87930E318CE31C90018281C /* LivingRoomScene.c in Sources */,
+				C184BDEE3D87BE9FA1272D14 /* Placement.c in Sources */,
+				C184B87194E8A393BCD8D7EF /* TreeNode.c in Sources */,
+				C184B6AEE3482D3959E13485 /* MaterialTypes.c in Sources */,
+				C184B1991F3F07CED5FFB31B /* TableDrawer.c in Sources */,
+				C184B67C8C148AEB26D34948 /* LampDrawer.c in Sources */,
+				C184BE29D8ED69542C14E5EE /* Input.c in Sources */,
+				C184B0B66708618A91897A3D /* WallDrawer.c in Sources */,
+				C184B3B5B9F3841D16C698A7 /* WallDrawer.h in Sources */,
+				C184B68D21A15F0298A7845E /* SolidCube_Tex.c in Sources */,
+				C184B2B2F981D260E76E3069 /* StageDrawer.c in Sources */,
+				C184BCDD13B632CECD1134F5 /* Drawer.c in Sources */,
+				C184B39927DEC0FD5F22C09B /* BookshelfDrawer.c in Sources */,
+				C184B1D84A345AC09489627B /* ChairDrawer.c in Sources */,
+				C184BC6D548D3FF7157C45CA /* WindowDrawer.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C86DFFCB18F0A9D1006986EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C86DFFCC18F0A9D1006986EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C87930D818CE311B0018281C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		C87930D918CE311B0018281C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		C87930E718CE31C90018281C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C87930E818CE31C90018281C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C86DFFCD18F0A9D1006986EF /* Build configuration list for PBXNativeTarget "LivingRoomScene" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C86DFFCB18F0A9D1006986EF /* Debug */,
+				C86DFFCC18F0A9D1006986EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C87930D718CE311B0018281C /* Build configuration list for PBXProject "LivingRoomGraphic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87930D818CE311B0018281C /* Debug */,
+				C87930D918CE311B0018281C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C87930E618CE31C90018281C /* Build configuration list for PBXNativeTarget "LivingRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87930E718CE31C90018281C /* Debug */,
+				C87930E818CE31C90018281C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C87930D418CE311B0018281C /* Project object */;
+}
